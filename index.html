@@ -278,6 +278,7 @@
             width: 100%;
             height: 180px;
             overflow: hidden;
+            background: linear-gradient(135deg, #f3eaf8 0%, #fdf5f9 100%);
         }
         .media-card-img img {
             width: 100%;
@@ -287,6 +288,66 @@
         }
         .media-card:hover .media-card-img img {
             transform: scale(1.05);
+        }
+        .media-card-meta {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+        .media-card-tag {
+            background: var(--accent);
+            color: #fff;
+            padding: 0.2rem 0.6rem;
+            border-radius: 100px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+        .media-filter {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-top: 2rem;
+        }
+        .media-filter-btn {
+            background: transparent;
+            border: 1px solid var(--border);
+            padding: 0.5rem 1rem;
+            border-radius: 100px;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: left;
+        }
+        .media-filter-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+        .media-filter-btn.active {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: #fff;
+        }
+        .media-more {
+            text-align: center;
+            margin-top: 3rem;
+        }
+        .media-more-btn {
+            display: inline-block;
+            padding: 0.8rem 2.5rem;
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 0.85rem;
+            letter-spacing: 0.05em;
+            transition: all 0.3s;
+        }
+        .media-more-btn:hover {
+            background: var(--accent);
+            color: #fff;
+        }
+        .media-card.hidden {
+            display: none;
         }
         .media-card-content {
             padding: 1.5rem;
@@ -386,8 +447,54 @@
         .media-modal-excerpt {
             font-size: 0.95rem;
             line-height: 1.8;
-            color: var(--text-muted);
+            color: var(--text);
             margin: 0 0 2rem 0;
+        }
+        .media-modal-excerpt p {
+            margin: 0 0 1rem 0;
+        }
+        .media-modal-excerpt .excerpt-lead {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--text);
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .media-modal-excerpt .excerpt-heading {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text);
+            margin: 2rem 0 1rem 0;
+            padding-left: 0.8rem;
+            border-left: 3px solid var(--accent);
+        }
+        .media-modal-excerpt .excerpt-list {
+            margin: 0 0 1.5rem 0;
+            padding-left: 1.5rem;
+        }
+        .media-modal-excerpt .excerpt-list li {
+            margin-bottom: 0.5rem;
+            color: var(--text-muted);
+        }
+        .media-modal-excerpt .excerpt-list li strong {
+            color: var(--text);
+        }
+        .media-modal-excerpt .excerpt-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0 1.5rem 0;
+            font-size: 0.85rem;
+        }
+        .media-modal-excerpt .excerpt-table th,
+        .media-modal-excerpt .excerpt-table td {
+            border: 1px solid var(--border);
+            padding: 0.8rem;
+            text-align: left;
+        }
+        .media-modal-excerpt .excerpt-table th {
+            background: var(--bg-main);
+            font-weight: 600;
         }
         .media-modal-link {
             display: inline-block;
@@ -1107,64 +1214,95 @@
     <section class="grid-section section-4">
         <div class="sticky-col">
             <span class="u-caps">04 / Media</span>
+            <h2 class="section-title-sub" style="margin-top:1.5rem; font-size:1.8rem; font-weight:600; line-height:1.4;">HR Insights</h2>
+            <p class="media-desc">人事・組織に関する<br>Vinifyのナレッジを発信</p>
+            <div class="media-filter">
+                <button class="media-filter-btn active" data-filter="all">ALL</button>
+                <button class="media-filter-btn" data-filter="採用">採用</button>
+                <button class="media-filter-btn" data-filter="評価">評価</button>
+                <button class="media-filter-btn" data-filter="組織">組織</button>
+                <button class="media-filter-btn" data-filter="CHRO">CHRO</button>
+                <button class="media-filter-btn" data-filter="1on1">1on1</button>
+            </div>
         </div>
         <div class="content-col">
             <div class="media-container">
                 <div class="media-grid">
-                    <div class="media-card" data-article="1">
+                    <div class="media-card" data-article="1" data-category="採用">
                         <div class="media-card-img">
                             <img src="image/article-placeholder.jpg" alt="記事サムネイル" onerror="this.src='https://via.placeholder.com/400x250/f3eaf8/666?text=Article'">
                         </div>
                         <div class="media-card-content">
                             <h3 class="media-card-title">スタートアップの採用戦略：限られたリソースで優秀な人材を獲得する方法</h3>
-                            <span class="media-card-date">2025.01.02</span>
+                            <div class="media-card-meta">
+                                <span class="media-card-date">2025.01.02</span>
+                                <span class="media-card-tag">採用</span>
+                            </div>
                         </div>
                     </div>
-                    <div class="media-card" data-article="2">
+                    <div class="media-card" data-article="2" data-category="評価">
                         <div class="media-card-img">
                             <img src="image/article-placeholder.jpg" alt="記事サムネイル" onerror="this.src='https://via.placeholder.com/400x250/fdf5f9/666?text=Article'">
                         </div>
                         <div class="media-card-content">
                             <h3 class="media-card-title">評価制度の設計：公平性と納得感を両立させるポイント</h3>
-                            <span class="media-card-date">2024.12.20</span>
+                            <div class="media-card-meta">
+                                <span class="media-card-date">2024.12.20</span>
+                                <span class="media-card-tag">評価</span>
+                            </div>
                         </div>
                     </div>
-                    <div class="media-card" data-article="3">
+                    <div class="media-card" data-article="3" data-category="組織">
                         <div class="media-card-img">
                             <img src="image/article-placeholder.jpg" alt="記事サムネイル" onerror="this.src='https://via.placeholder.com/400x250/f3eaf8/666?text=Article'">
                         </div>
                         <div class="media-card-content">
                             <h3 class="media-card-title">リモートワーク時代の組織文化づくり</h3>
-                            <span class="media-card-date">2024.12.15</span>
+                            <div class="media-card-meta">
+                                <span class="media-card-date">2024.12.15</span>
+                                <span class="media-card-tag">組織</span>
+                            </div>
                         </div>
                     </div>
-                    <div class="media-card" data-article="4">
+                    <div class="media-card" data-article="4" data-category="CHRO">
                         <div class="media-card-img">
                             <img src="image/article-placeholder.jpg" alt="記事サムネイル" onerror="this.src='https://via.placeholder.com/400x250/fdf5f9/666?text=Article'">
                         </div>
                         <div class="media-card-content">
                             <h3 class="media-card-title">CHRO機能の内製化 vs 外部活用、どちらが正解？</h3>
-                            <span class="media-card-date">2024.12.10</span>
+                            <div class="media-card-meta">
+                                <span class="media-card-date">2024.12.10</span>
+                                <span class="media-card-tag">CHRO</span>
+                            </div>
                         </div>
                     </div>
-                    <div class="media-card" data-article="5">
+                    <div class="media-card" data-article="5" data-category="採用">
                         <div class="media-card-img">
                             <img src="image/article-placeholder.jpg" alt="記事サムネイル" onerror="this.src='https://via.placeholder.com/400x250/f3eaf8/666?text=Article'">
                         </div>
                         <div class="media-card-content">
                             <h3 class="media-card-title">採用ブランディングの基本：候補者に選ばれる企業になるには</h3>
-                            <span class="media-card-date">2024.12.05</span>
+                            <div class="media-card-meta">
+                                <span class="media-card-date">2024.12.05</span>
+                                <span class="media-card-tag">採用</span>
+                            </div>
                         </div>
                     </div>
-                    <div class="media-card" data-article="6">
+                    <div class="media-card" data-article="6" data-category="1on1">
                         <div class="media-card-img">
                             <img src="image/article-placeholder.jpg" alt="記事サムネイル" onerror="this.src='https://via.placeholder.com/400x250/fdf5f9/666?text=Article'">
                         </div>
                         <div class="media-card-content">
                             <h3 class="media-card-title">1on1ミーティングを効果的に運用するためのフレームワーク</h3>
-                            <span class="media-card-date">2024.11.28</span>
+                            <div class="media-card-meta">
+                                <span class="media-card-date">2024.11.28</span>
+                                <span class="media-card-tag">1on1</span>
+                            </div>
                         </div>
                     </div>
+                </div>
+                <div class="media-more">
+                    <a href="#" class="media-more-btn">View All →</a>
                 </div>
             </div>
         </div>
@@ -1400,47 +1538,199 @@
                 if(e.target === caseModal) closeCaseModal();
             });
 
+            // メディアフィルター機能
+            const filterBtns = document.querySelectorAll('.media-filter-btn');
+            const mediaCards = document.querySelectorAll('.media-card');
+            
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    // ボタンのアクティブ状態を更新
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    
+                    const filter = btn.getAttribute('data-filter');
+                    
+                    // カードの表示/非表示を切り替え
+                    mediaCards.forEach(card => {
+                        const category = card.getAttribute('data-category');
+                        if (filter === 'all' || category === filter) {
+                            card.classList.remove('hidden');
+                        } else {
+                            card.classList.add('hidden');
+                        }
+                    });
+                });
+            });
+
             // メディアモーダル
             const mediaArticles = {
                 1: {
                     title: "スタートアップの採用戦略：限られたリソースで優秀な人材を獲得する方法",
                     date: "2025.01.02",
-                    excerpt: "スタートアップ企業にとって、優秀な人材の獲得は成長の鍵となります。しかし、大企業と比べてリソースが限られる中で、どのようにして候補者の心を掴むのか。本記事では、実際の成功事例をもとに、スタートアップならではの採用戦略を解説します。",
+                    excerpt: `<p class="excerpt-lead">スタートアップ企業にとって、優秀な人材の獲得は成長の鍵となります。しかし、大企業と比べてリソースが限られる中で、どのようにして候補者の心を掴むのか。</p>
+
+<h4 class="excerpt-heading">本記事のポイント</h4>
+<ul class="excerpt-list">
+<li>スタートアップならではの採用における強みと弱みの分析</li>
+<li>限られた予算で最大効果を出す採用チャネルの選び方</li>
+<li>ミッション・ビジョンを活用した候補者へのアプローチ方法</li>
+<li>創業メンバーが採用活動に関わることの重要性</li>
+<li>面接プロセスの設計と候補者体験の向上</li>
+</ul>
+
+<h4 class="excerpt-heading">1. スタートアップ採用の現状と課題</h4>
+<p>近年、スタートアップへの就職・転職を希望する人材は増加傾向にあります。しかし、知名度や待遇面で大手企業に劣るスタートアップが、本当に欲しい人材を獲得するのは容易ではありません。</p>
+<p><strong>採用における主な課題：</strong></p>
+<ul class="excerpt-list">
+<li>知名度が低く、そもそも認知されていない</li>
+<li>給与・福利厚生で大手に勝てない</li>
+<li>採用専任者がおらず、経営者が片手間で対応</li>
+<li>面接のノウハウが蓄積されていない</li>
+</ul>
+
+<h4 class="excerpt-heading">2. スタートアップならではの強みを活かす</h4>
+<p>一方で、スタートアップには大手にはない魅力があります。これを正しく言語化し、候補者に伝えることが重要です。</p>
+<p><strong>スタートアップの採用における強み：</strong></p>
+<ul class="excerpt-list">
+<li><strong>成長機会</strong>：短期間で幅広い経験が積める</li>
+<li><strong>裁量権</strong>：自分の意見が直接プロダクトや組織に反映される</li>
+<li><strong>インパクト</strong>：自分の仕事が会社の成長に直結する実感</li>
+<li><strong>経営層との距離</strong>：CEOと直接議論できる環境</li>
+<li><strong>ストックオプション</strong>：会社の成長に応じたリターン</li>
+</ul>
+
+<h4 class="excerpt-heading">3. 効果的な採用チャネルの選定</h4>
+<p>限られた予算で最大の効果を出すためには、チャネル選定が重要です。</p>
+<p><strong>おすすめのチャネルと特徴：</strong></p>
+<ul class="excerpt-list">
+<li><strong>リファラル採用</strong>：最も効果的。社員の人脈を活用</li>
+<li><strong>ダイレクトリクルーティング</strong>：ターゲット人材に直接アプローチ</li>
+<li><strong>SNS採用</strong>：会社の雰囲気を伝えやすい</li>
+<li><strong>採用イベント</strong>：スタートアップに興味がある層に効率的にリーチ</li>
+</ul>
+
+<h4 class="excerpt-heading">まとめ</h4>
+<p>スタートアップの採用は、大手企業との「条件勝負」ではなく「価値観・ビジョン勝負」です。自社の魅力を正しく言語化し、共感してくれる人材にリーチすることが成功の鍵となります。</p>`,
                     img: "https://via.placeholder.com/800x400/f3eaf8/666?text=Startup+Recruiting",
                     link: "/media/startup-recruiting-strategy"
                 },
                 2: {
                     title: "評価制度の設計：公平性と納得感を両立させるポイント",
                     date: "2024.12.20",
-                    excerpt: "社員のモチベーションと組織の成長を両立させる評価制度とは？公平性を担保しながら、社員が納得できる評価の仕組みづくりについて、制度設計の専門家が解説します。",
+                    excerpt: `<p class="excerpt-lead">社員のモチベーションと組織の成長を両立させる評価制度とは？公平性を担保しながら、社員が納得できる評価の仕組みづくりについて解説します。</p>
+
+<h4 class="excerpt-heading">本記事のポイント</h4>
+<ul class="excerpt-list">
+<li>評価制度が機能しない企業に共通する3つの課題</li>
+<li>目標設定（MBO/OKR）と評価の紐づけ方</li>
+<li>定量評価と定性評価のバランスの取り方</li>
+<li>評価者トレーニングの重要性と実施方法</li>
+</ul>
+
+<h4 class="excerpt-heading">なぜ評価制度は機能しないのか？</h4>
+<p>「評価に納得できない」という声は、多くの企業で聞かれる課題です。その原因を紐解くと、いくつかの共通点が見えてきます。</p>
+<p><strong>よくある失敗パターン：</strong></p>
+<ul class="excerpt-list">
+<li>評価基準が曖昧で、評価者によってブレが大きい</li>
+<li>目標設定が形骸化し、期末に思い出す程度</li>
+<li>フィードバックがなく、なぜその評価なのかわからない</li>
+<li>評価と報酬の連動が不明確</li>
+</ul>
+
+<h4 class="excerpt-heading">効果的な評価制度の設計ステップ</h4>
+<p><strong>Step 1：評価の目的を明確にする</strong></p>
+<p>評価制度の目的は「査定」だけではありません。成長支援、適材適所、組織の方向性の浸透など、複合的な目的を整理しましょう。</p>
+
+<p><strong>Step 2：評価基準を言語化する</strong></p>
+<p>「何をもって良い仕事とするか」を具体的に定義します。職種・等級ごとに期待される行動や成果を明文化することが重要です。</p>
+
+<p><strong>Step 3：評価プロセスを設計する</strong></p>
+<p>目標設定→中間レビュー→期末評価→フィードバックという一連の流れを設計します。</p>`,
                     img: "https://via.placeholder.com/800x400/fdf5f9/666?text=Evaluation+System",
                     link: "/media/evaluation-system-design"
                 },
                 3: {
                     title: "リモートワーク時代の組織文化づくり",
                     date: "2024.12.15",
-                    excerpt: "リモートワークが当たり前になった今、どのようにして組織文化を醸成し、チームの一体感を保つのか。成功企業の事例から学ぶ、新しい時代の組織づくり。",
+                    excerpt: `<p class="excerpt-lead">リモートワークが当たり前になった今、どのようにして組織文化を醸成し、チームの一体感を保つのか。成功企業の事例から学ぶ、新しい時代の組織づくり。</p>
+
+<h4 class="excerpt-heading">リモートワークがもたらす組織への影響</h4>
+<p>リモートワークの普及により、働き方は大きく変わりました。通勤時間の削減、柔軟な働き方など、メリットがある一方で、組織文化の維持という新たな課題も浮上しています。</p>
+
+<h4 class="excerpt-heading">組織文化を維持するための5つの施策</h4>
+<ul class="excerpt-list">
+<li><strong>定期的なオンライン全社ミーティング</strong>：経営からのメッセージを直接届ける</li>
+<li><strong>バーチャルオフィスの導入</strong>：偶発的なコミュニケーションを促進</li>
+<li><strong>オンラインイベントの開催</strong>：チームビルディングの機会を創出</li>
+<li><strong>1on1の徹底</strong>：個別のケアを欠かさない</li>
+<li><strong>オフラインの機会の創出</strong>：定期的な対面の場を設ける</li>
+</ul>`,
                     img: "https://via.placeholder.com/800x400/f3eaf8/666?text=Remote+Work+Culture",
                     link: "/media/remote-work-culture"
                 },
                 4: {
                     title: "CHRO機能の内製化 vs 外部活用、どちらが正解？",
                     date: "2024.12.10",
-                    excerpt: "人事戦略を担うCHRO機能を自社で持つべきか、外部の専門家を活用すべきか。企業のステージや課題に応じた最適な選択肢を、メリット・デメリットとともに解説します。",
+                    excerpt: `<p class="excerpt-lead">人事戦略を担うCHRO機能を自社で持つべきか、外部の専門家を活用すべきか。企業のステージや課題に応じた最適な選択肢を解説します。</p>
+
+<h4 class="excerpt-heading">CHRO機能とは何か？</h4>
+<p>CHRO（Chief Human Resources Officer）は、単なる人事部長ではありません。経営戦略と人事戦略を紐づけ、組織・人材の観点から企業の成長を牽引する役割です。</p>
+
+<h4 class="excerpt-heading">内製化 vs 外部活用の比較</h4>
+<table class="excerpt-table">
+<tr><th></th><th>内製化</th><th>外部活用</th></tr>
+<tr><td><strong>メリット</strong></td><td>組織理解が深い、即時対応可能</td><td>専門性が高い、客観的視点</td></tr>
+<tr><td><strong>デメリット</strong></td><td>採用難易度が高い、コスト高</td><td>組織理解に時間がかかる</td></tr>
+<tr><td><strong>向いている企業</strong></td><td>大企業、人事課題が複雑</td><td>スタートアップ、成長フェーズ</td></tr>
+</table>
+
+<h4 class="excerpt-heading">フラクショナルCHROという選択肢</h4>
+<p>最近注目されているのが「フラクショナルCHRO」という形態です。週1〜2日程度の稼働で、CHRO機能を外部から提供するモデルです。</p>`,
                     img: "https://via.placeholder.com/800x400/fdf5f9/666?text=CHRO+Function",
                     link: "/media/chro-inhouse-vs-outsource"
                 },
                 5: {
                     title: "採用ブランディングの基本：候補者に選ばれる企業になるには",
                     date: "2024.12.05",
-                    excerpt: "優秀な人材から「選ばれる企業」になるために必要な採用ブランディングの考え方と実践方法。自社の魅力を効果的に伝えるためのステップを紹介します。",
+                    excerpt: `<p class="excerpt-lead">優秀な人材から「選ばれる企業」になるために必要な採用ブランディングの考え方と実践方法を紹介します。</p>
+
+<h4 class="excerpt-heading">採用ブランディングとは？</h4>
+<p>採用ブランディングとは、「働く場所としての企業の魅力」を言語化し、ターゲット人材に効果的に伝える一連の活動です。</p>
+
+<h4 class="excerpt-heading">採用ブランディングの5ステップ</h4>
+<ul class="excerpt-list">
+<li><strong>Step 1</strong>：自社の魅力を棚卸しする</li>
+<li><strong>Step 2</strong>：ターゲット人材を明確にする</li>
+<li><strong>Step 3</strong>：採用メッセージを策定する</li>
+<li><strong>Step 4</strong>：発信チャネルを選定する</li>
+<li><strong>Step 5</strong>：社員を巻き込んで発信する</li>
+</ul>`,
                     img: "https://via.placeholder.com/800x400/f3eaf8/666?text=Employer+Branding",
                     link: "/media/employer-branding-basics"
                 },
                 6: {
                     title: "1on1ミーティングを効果的に運用するためのフレームワーク",
                     date: "2024.11.28",
-                    excerpt: "1on1ミーティングを形骸化させず、社員の成長と組織の活性化につなげるには？効果的な1on1の進め方と、マネージャーが押さえるべきポイントを解説。",
+                    excerpt: `<p class="excerpt-lead">1on1ミーティングを形骸化させず、社員の成長と組織の活性化につなげるには？効果的な1on1の進め方を解説します。</p>
+
+<h4 class="excerpt-heading">1on1の目的を明確にする</h4>
+<p>1on1は「業務報告の場」ではありません。<strong>部下の成長支援</strong>が主目的です。</p>
+
+<h4 class="excerpt-heading">GROWモデルを活用した1on1</h4>
+<ul class="excerpt-list">
+<li><strong>G（Goal）</strong>：何を達成したいか？</li>
+<li><strong>R（Reality）</strong>：現状はどうか？</li>
+<li><strong>O（Options）</strong>：どんな選択肢があるか？</li>
+<li><strong>W（Will）</strong>：何をするか？</li>
+</ul>
+
+<h4 class="excerpt-heading">1on1で避けるべきNG行動</h4>
+<ul class="excerpt-list">
+<li>上司が一方的に話す</li>
+<li>業務の進捗確認だけで終わる</li>
+<li>忙しさを理由にキャンセルする</li>
+<li>フィードバックが批判だけになる</li>
+</ul>`,
                     img: "https://via.placeholder.com/800x400/fdf5f9/666?text=1on1+Meeting",
                     link: "/media/1on1-meeting-framework"
                 }
@@ -1462,7 +1752,7 @@
                         mediaModalImg.src = article.img;
                         mediaModalTitle.textContent = article.title;
                         mediaModalDate.textContent = article.date;
-                        mediaModalExcerpt.textContent = article.excerpt;
+                        mediaModalExcerpt.innerHTML = article.excerpt;
                         mediaModalLink.href = article.link;
                         mediaModal.classList.add('open');
                         document.body.style.overflow = 'hidden';
