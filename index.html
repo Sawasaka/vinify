@@ -9,8 +9,8 @@
     
     <style>
         :root {
-            --bg: #faf8fc;
-            --bg-main: #f0e8f5;
+            --bg: #fefefe;
+            --bg-main: #faf9fb;
             --bg-purple-mid: #7C3AED;
             --bg-dark: #1a001f;
             --text: #1a1a1a;
@@ -169,6 +169,7 @@
         }
         
         /* Works */
+        .section-2 .sticky-col { height: auto; min-height: auto; }
         .section-2 .work-num { color: var(--accent); }
         .section-2 .work-title { color: var(--text); }
         .section-2 .work-cat { 
@@ -238,6 +239,38 @@
         .services-bottom-label {
             margin-top: auto;
         }
+        
+        /* Works Preview */
+        .works-sticky-col {
+            display: flex;
+            flex-direction: column;
+            align-self: stretch;
+            min-height: 100%;
+        }
+        .works-preview-box {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 0;
+        }
+        .works-preview-img {
+            max-width: 100%;
+            max-height: 300px;
+            object-fit: contain;
+            border-radius: 8px;
+            box-shadow: 0 10px 40px rgba(192, 38, 211, 0.3);
+            opacity: 0;
+            transform: scale(0.9);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .works-preview-img.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+        .works-bottom-label {
+            margin-top: auto;
+        }
         .services-rows {
             display: flex;
             flex-direction: column;
@@ -305,7 +338,7 @@
         .work-item {
             display: block; position: relative;
             border-bottom: 1px solid var(--border);
-            padding: 3rem 4rem;
+            padding: 1.5rem 4rem;
             transition: background 0.3s;
             text-decoration: none; color: inherit;
             cursor: pointer;
@@ -316,14 +349,21 @@
         .work-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1rem; }
         .work-num { font-family: 'Inter'; font-weight: 600; color: var(--accent); font-size: 0.875rem; }
         .work-title { font-size: 2.5rem; margin: 0; font-weight: 900; line-height: 1; color: var(--text); }
+        .work-summary { 
+            font-size: 0.95rem; 
+            color: var(--text-muted); 
+            margin: 0.8rem 0 0 0; 
+            line-height: 1.6; 
+            max-width: 600px;
+        }
         .work-cat { 
-            position: absolute; right: 4rem; top: 50%; transform: translateY(-50%);
+            display: inline-block;
+            margin-top: 1rem;
             border: 1px solid var(--accent); padding: 0.5rem 1rem; border-radius: 100px;
-            opacity: 0; transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: 0.3s;
             font-size: 0.75rem; color: var(--accent);
         }
         .work-item:hover .work-cat { 
-            opacity: 1; right: 2rem;
             background: var(--accent); color: #fff;
         }
 
@@ -790,9 +830,12 @@
     </section>
 
     <section class="grid-section section-2">
-        <div class="sticky-col">
-            <span class="u-caps">02 / Selected Works</span>
-            <div class="u-caps">Case Studies</div>
+        <div class="sticky-col works-sticky-col">
+            <span class="u-caps">02 / Our Works</span>
+            <div class="works-preview-box">
+                <img id="works-preview-img" src="" alt="Preview" class="works-preview-img">
+            </div>
+            <span class="u-caps works-bottom-label">Case Studies</span>
         </div>
         <div class="content-col" id="works-container"></div>
     </section>
@@ -902,29 +945,18 @@
             
             workText: {
                 1: { 
-                    title: "株式会社AVIC", 
-                    cat: "人事・組織基盤構築",
-                    desc: "設立間もないスタートアップの「ゼロイチ」上場達成を支えた人事・組織基盤構築プロジェクト。東京証券取引所グロース市場への株式上場を達成。離職率0%を実現し、組織の安定性と持続的な成長基盤を確立。"
-                },
-                2: { 
                     title: "株式会社ベル", 
                     cat: "採用戦略",
-                    desc: "実業家オーナーの事業発展を加速させるための「人間力採用」戦略プロジェクト。オーナーの右腕となる優秀な人財確保を実現。少数精鋭の採用に成功。"
+                    summary: "実業家オーナーの事業発展を加速させる「人間力採用」戦略。<br>オーナーの右腕となる優秀な人財を少数精鋭で確保。",
+                    desc: "実業家オーナーの事業発展を加速させるための「人間力採用」戦略プロジェクト。オーナーの右腕となる優秀な人財確保を実現。少数精鋭の採用に成功。",
+                    img: "image/人事・マーケティング実績_ページ_2.jpg"
                 },
-                3: { 
-                    title: "TELESCOPE Magazine", 
+                2: { 
+                    title: "東京エレクトロン株式会社", 
                     cat: "メディア運営",
-                    desc: "東京エレクトロンの若手研究者獲得のためのWEBメディア運営。東大でのリアルイベントで200名を集客し、採用リードを獲得。新卒採用応募数の増加に貢献。"
-                },
-                4: {
-                    title: "学校法人文理佐藤学園",
-                    cat: "組織変革",
-                    desc: "硬直化した組織体質の変革と事業再生を主導した学校法人再建プロジェクト。粘り強い合意形成により、組織に新しい意識をもたらし、中長期的な成長基盤を構築。"
-                },
-                5: {
-                    title: "株式会社サンプル",
-                    cat: "人材開発",
-                    desc: "次世代リーダー育成プログラムの設計と実行。組織全体のスキルアップと生産性向上を実現。"
+                    summary: "若手研究者獲得のためのWEBメディア「TELESCOPE Magazine」運営。<br>東大イベントで200名集客、新卒採用応募数の増加に貢献。",
+                    desc: "東京エレクトロンの若手研究者獲得のためのWEBメディア運営。東大でのリアルイベントで200名を集客し、採用リードを獲得。新卒採用応募数の増加に貢献。",
+                    img: "image/人事・マーケティング実績_ページ_4.jpg"
                 }
             },
 
@@ -957,9 +989,9 @@
             const modalDesc = document.getElementById('modal-desc'); 
             const modalClose = document.getElementById('modal-close');
 
-            for (let i = 1; i <= 18; i++) {
-                const imgPath = `image/image${i}.jpg`;
+            for (let i = 1; i <= 2; i++) {
                 const info = config.workText[i] || { title: `PROJECT ${String(i).padStart(2, '0')}`, cat: "Design Work" };
+                const imgPath = info.img || `image/image${i}.jpg`;
 
                 const el = document.createElement('div');
                 el.className = 'work-item';
@@ -971,26 +1003,35 @@
                          onerror="this.closest('.work-item').remove()">
                     <div class="work-header">
                         <span class="work-num">(${String(i).padStart(2, '0')})</span>
-                        <div class="work-cat">${info.cat}</div>
                     </div>
                     <h3 class="work-title">${info.title}</h3>
+                    <p class="work-summary">${info.summary || ''}</p>
+                    <div class="work-cat">事例を見る →</div>
                 `;
 
                 el.addEventListener('mouseenter', () => {
-                    hoverImg.src = imgPath;
-                    hoverImg.classList.add('active');
+                    const worksPreviewImg = document.getElementById('works-preview-img');
+                    if (worksPreviewImg) {
+                        worksPreviewImg.src = imgPath;
+                        worksPreviewImg.classList.add('visible');
+                    }
                 });
                 el.addEventListener('mouseleave', () => {
-                    hoverImg.classList.remove('active');
+                    const worksPreviewImg = document.getElementById('works-preview-img');
+                    if (worksPreviewImg) {
+                        worksPreviewImg.classList.remove('visible');
+                    }
                 });
 
                 el.addEventListener('click', (e) => {
                     e.preventDefault();
-                    modalImg.src = imgPath;
-                    modalTitle.textContent = info.title;
-                    modalCat.textContent = info.cat;
-                    modalDesc.textContent = info.desc || "詳細情報が設定されていません。";
-                    modal.classList.add('open');
+                    const caseModal = document.getElementById('case-modal-wrap');
+                    const caseModalImg = document.getElementById('case-modal-img');
+                    const caseModalTitle = document.getElementById('case-modal-title');
+                    caseModalImg.src = imgPath;
+                    caseModalTitle.textContent = info.title + ' - 事例紹介';
+                    caseModal.classList.add('open');
+                    document.body.style.overflow = 'hidden';
                 });
 
                 worksCont.appendChild(el);
