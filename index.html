@@ -33,12 +33,12 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        .u-caps { text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.7rem; font-weight: 600; color: var(--text-muted); }
+        .u-caps { text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.7rem; font-weight: 600; color: var(--text); }
         
         /* ローダー */
         .loader {
             position: fixed; inset: 0;
-            background: linear-gradient(135deg, var(--accent) 0%, var(--bg-purple-mid) 50%, var(--bg-dark) 100%);
+            background: linear-gradient(180deg, #2d0045 0%, var(--bg-dark) 50%);
             z-index: 9999;
             display: flex; align-items: center; justify-content: center;
             transition: transform 0.8s cubic-bezier(0.76, 0, 0.24, 1);
@@ -48,8 +48,8 @@
 
         /* ヘッダー - 薄紫背景 */
         header {
-            min-height: 90vh;
-            display: flex; flex-direction: column; justify-content: space-between;
+            min-height: 100vh;
+            display: flex; flex-direction: column;
             padding: 2vw;
             position: relative;
             background: var(--bg-main);
@@ -70,18 +70,21 @@
         .header-role { color: var(--accent); }
         
         .hero-title {
-            font-size: 15vw;
-            line-height: 0.9;
+            font-size: 10vw;
+            line-height: 1;
             font-weight: 900;
-            letter-spacing: -0.04em;
+            letter-spacing: -0.02em;
             margin: 0;
             text-transform: uppercase;
             color: var(--text);
-        }
-        .hero-title span { 
-            display: block; 
-            opacity: 0; 
-            transform: translateY(100px); 
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+            gap: 0.3em;
+            opacity: 0;
+            transform: translateY(50px);
             transition: 1s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .hero-title .accent-text { 
@@ -90,25 +93,44 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
-        .loaded .hero-title span { opacity: 1; transform: translateY(0); }
+        .loaded .hero-title { opacity: 1; transform: translateY(0); }
 
         /* マーキー */
         .marquee-wrap {
             overflow: hidden; white-space: nowrap;
             border-bottom: none;
-            padding: 1.5rem 0;
+            padding: 1.2rem 0;
             background: linear-gradient(90deg, var(--accent) 0%, var(--bg-purple-mid) 50%, var(--accent) 100%);
+            display: flex;
+            align-items: center;
         }
         .marquee-content {
-            display: inline-block;
-            animation: marquee 20s linear infinite;
+            display: inline-flex;
+            align-items: center;
+            animation: marquee 25s linear infinite;
         }
-        .marquee-text {
-            font-size: 3rem;
+        .marquee-item {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            margin-right: 4rem;
+            text-align: center;
+            vertical-align: middle;
+        }
+        .marquee-en {
+            font-size: 2rem;
             font-weight: 900;
-            -webkit-text-stroke: 1px rgba(255,255,255,0.8);
+            -webkit-text-stroke: 1px rgba(255,255,255,0.9);
             color: transparent;
-            margin-right: 2rem;
+            line-height: 1.2;
+            letter-spacing: 0.05em;
+        }
+        .marquee-jp {
+            font-size: 0.65rem;
+            color: rgba(255,255,255,0.9);
+            margin-top: 0.15rem;
+            font-weight: 500;
+            letter-spacing: 0.1em;
         }
         @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
@@ -123,7 +145,7 @@
             border-right: var(--border-width) solid var(--border);
             position: sticky; top: 0; height: 100vh;
             background: inherit;
-            display: flex; flex-direction: column; justify-content: space-between;
+            display: flex; flex-direction: column; justify-content: flex-start;
             z-index: 1;
         }
         .content-col { padding: 0; position: relative; }
@@ -161,9 +183,113 @@
         
         /* Profile */
         .section-3 { border-bottom: none; }
-        .section-3 .company-table th { color: var(--accent); }
+        .section-3 .company-table th { color: var(--text); }
         .section-3 .google-map-link { color: var(--accent); border-bottom-color: var(--accent); }
 
+        /* Services */
+        .services-grid {
+            display: flex;
+            flex-direction: column;
+        }
+        /* Services Section */
+        .section-services {
+            background: var(--bg-main);
+            border-bottom: var(--border-width) solid var(--border);
+        }
+        .services-main-layout {
+            display: grid;
+            grid-template-columns: 30% 70%;
+        }
+        .services-sticky-col {
+            position: sticky;
+            top: 0;
+            height: fit-content;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid var(--border);
+            align-self: stretch;
+            min-height: 100%;
+        }
+        .services-preview-box {
+            position: absolute;
+            left: 2rem;
+            right: 2rem;
+            transition: top 0.3s ease;
+            pointer-events: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .services-preview-img {
+            max-width: 100%;
+            max-height: 350px;
+            object-fit: contain;
+            border-radius: 8px;
+            box-shadow: 0 10px 40px rgba(192, 38, 211, 0.3);
+            opacity: 0;
+            transform: scale(0.9);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .services-preview-img.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+        .services-bottom-label {
+            margin-top: auto;
+        }
+        .services-rows {
+            display: flex;
+            flex-direction: column;
+        }
+        .service-row {
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .service-row:hover {
+            background: rgba(192, 38, 211, 0.05);
+        }
+        .service-content-col {
+            padding: 3rem 4rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .service-row:last-child .service-content-col {
+            border-bottom: none;
+        }
+        .service-num {
+            font-family: 'Inter';
+            font-weight: 600;
+            color: var(--accent);
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+        }
+        .service-title {
+            font-size: 2rem;
+            font-weight: 900;
+            margin: 0 0 1rem 0;
+            color: var(--text);
+        }
+        .service-desc {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.8;
+            margin: 0;
+        }
+        .service-tag {
+            display: inline-block;
+            margin-top: 1.5rem;
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--accent);
+            border-radius: 100px;
+            font-size: 0.75rem;
+            color: var(--accent);
+            transition: all 0.3s;
+        }
+        .service-row:hover .service-tag {
+            background: var(--accent);
+            color: #fff;
+        }
+        
         /* About */
         .big-lead {
             font-size: 2.5rem;
@@ -267,6 +393,58 @@
         }
         .modal-close:hover { transform: scale(1.1); }
         
+        /* Case Modal - 事例画像用 */
+        .case-modal-wrap {
+            position: fixed; inset: 0;
+            background: rgba(0,0,0,0.95);
+            z-index: 10001;
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.4s;
+            display: flex; align-items: flex-start; justify-content: center;
+            padding: 2rem;
+            overflow-y: auto;
+        }
+        .case-modal-wrap.open { opacity: 1; pointer-events: auto; }
+        .case-modal-content {
+            position: relative;
+            max-width: 1000px;
+            width: 100%;
+        }
+        .case-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            position: sticky;
+            top: 0;
+            background: rgba(0,0,0,0.9);
+            padding: 1rem 0;
+            z-index: 10;
+        }
+        .case-modal-title {
+            color: #fff;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0;
+        }
+        .case-modal-close {
+            width: 40px; height: 40px;
+            background: var(--accent); color: #fff;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; font-weight: 900;
+            border-radius: 50%;
+            border: none;
+            transition: transform 0.3s;
+            flex-shrink: 0;
+        }
+        .case-modal-close:hover { transform: scale(1.1); }
+        .case-modal-img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+        }
+        
         /* Footer - 紫背景 */
         .footer {
             padding: 6rem 2vw;
@@ -312,6 +490,18 @@
             }
             
             .big-lead { font-size: 1.5rem; padding: 2rem 1.5rem; }
+            .services-main-layout { grid-template-columns: 1fr; }
+            .services-sticky-col { 
+                flex-direction: row;
+                justify-content: space-between;
+                border-right: none;
+                border-bottom: 1px solid var(--border);
+                padding: 1.5rem;
+            }
+            .services-preview-box { display: none; }
+            .services-bottom-label { margin-top: 0; }
+            .service-content-col { padding: 2rem 1.5rem; }
+            .service-title { font-size: 1.5rem; }
             .work-item { padding: 2rem 1.5rem; }
             .work-title { font-size: 1.5rem; margin-top: 0.5rem; }
             .work-cat { display: none; }
@@ -350,6 +540,16 @@
         </div>
     </div>
 
+    <div class="case-modal-wrap" id="case-modal-wrap">
+        <div class="case-modal-content">
+            <div class="case-modal-header">
+                <h2 class="case-modal-title" id="case-modal-title"></h2>
+                <button class="case-modal-close" id="case-modal-close">✕</button>
+            </div>
+            <img src="" alt="" class="case-modal-img" id="case-modal-img">
+        </div>
+    </div>
+
     <header>
         <div class="header-top">
             <div class="logo">
@@ -364,13 +564,41 @@
         <div class="marquee-content" id="marquee-text"></div>
     </div>
 
-    <section class="grid-section section-1">
-        <div class="sticky-col">
-            <span class="u-caps">01 / Manifesto</span>
-            <div class="u-caps">Philosophy & Mindset</div>
-        </div>
-        <div class="content-col">
-            <p id="main-lead" class="big-lead"></p>
+    <section class="section-services">
+        <div class="services-main-layout">
+            <div class="services-sticky-col">
+                <span class="u-caps">01 / Selected Works</span>
+                <div class="services-preview-box">
+                    <img id="services-preview-img" src="" alt="Preview" class="services-preview-img">
+                </div>
+                <span class="u-caps services-bottom-label">Case Studies</span>
+            </div>
+            <div class="services-rows">
+                <div class="service-row" data-preview="image/人事・マーケティング実績_ページ_1.jpg">
+                    <div class="service-content-col">
+                        <div class="service-num">(01)</div>
+                        <h3 class="service-title">CHRO顧問</h3>
+                        <p class="service-desc">経営視点でのHR戦略への参画。<br>人事戦略・組織基盤の企画から、採用設計、評価・報酬制度の構築まで一貫支援。</p>
+                        <span class="service-tag">事例：株式会社AVIC →</span>
+                    </div>
+                </div>
+                <div class="service-row" data-preview="image/人事・マーケティング実績_ページ_3.jpg">
+                    <div class="service-content-col">
+                        <div class="service-num">(02)</div>
+                        <h3 class="service-title">CHRO伴走</h3>
+                        <p class="service-desc">専属CHRO、またはフラクショナルCHROとして参画。<br>経営陣・マネージャー・メンバーと共に人事施策を推進します。</p>
+                        <span class="service-tag">事例：アクサダイレクト生命 →</span>
+                    </div>
+                </div>
+                <div class="service-row" data-preview="image/人事・マーケティング実績_ページ_5.jpg">
+                    <div class="service-content-col">
+                        <div class="service-num">(03)</div>
+                        <h3 class="service-title">CHRO機能提供</h3>
+                        <p class="service-desc">人事機能を丸ごとアウトソース。<br>CHRO監修のもと、採用・スカウト・ブランディング・マーケ・労務までVinifyチームが対応。</p>
+                        <span class="service-tag">事例：文理佐藤学園 →</span>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -433,11 +661,16 @@
             name: "Vinify",
             role: "HR Solutions",
             
-            heroTitle: "GROW<br><span class='accent-text'>INTO</span><br><span class='accent-text'>THE FUTURE.</span>",
+            heroTitle: "<span class='accent-text'>TALENT</span> BLOSSOM",
             
-            marquee: "TALENT BLOSSOM / HR CONSULTING / CAREER SUPPORT / RECRUITMENT STRATEGY / ",
-            
-            lead: "私たちは常識を再定義する。<br>ロジックを超えた先に、<br><span class='highlight'>真の感情を動かす存在</span>がある。",
+            marquee: [
+                { en: "HR STRATEGY", jp: "人事戦略" },
+                { en: "RECRUITMENT", jp: "採用" },
+                { en: "TALENT", jp: "育成制度" },
+                { en: "BRANDING", jp: "ブランディング" },
+                { en: "OPERATIONS", jp: "労務" },
+                { en: "MANAGEMENT", jp: "評価システム" }
+            ],
             
             workText: {
                 1: { 
@@ -479,12 +712,13 @@
             document.getElementById('year').textContent = new Date().getFullYear();
             
             const titleEl = document.getElementById('hero-title');
-            titleEl.innerHTML = config.heroTitle.split('<br>').map(line => `<span>${line}</span>`).join('');
+            titleEl.innerHTML = config.heroTitle;
 
             const marqueeEl = document.getElementById('marquee-text');
-            marqueeEl.innerHTML = `<span class="marquee-text">${config.marquee.repeat(4)}</span>`;
-
-            document.getElementById('main-lead').innerHTML = config.lead;
+            const marqueeItems = config.marquee.map(item => 
+                `<span class="marquee-item"><span class="marquee-en">${item.en}</span><span class="marquee-jp">${item.jp}</span></span>`
+            ).join('');
+            marqueeEl.innerHTML = marqueeItems.repeat(4);
 
             const worksCont = document.getElementById('works-container');
             const hoverImg = document.getElementById('hover-reveal');
@@ -538,6 +772,55 @@
             modalClose.addEventListener('click', closeModal);
             modal.addEventListener('click', (e) => {
                 if(e.target === modal) closeModal();
+            });
+
+            // 事例モーダル
+            const caseModal = document.getElementById('case-modal-wrap');
+            const caseModalImg = document.getElementById('case-modal-img');
+            const caseModalTitle = document.getElementById('case-modal-title');
+            const caseModalClose = document.getElementById('case-modal-close');
+
+            // サービスカードのホバー・クリックイベント
+            const servicesPreviewImg = document.getElementById('services-preview-img');
+            const servicesPreviewBox = servicesPreviewImg.parentElement;
+            const servicesStickyCol = document.querySelector('.services-sticky-col');
+            
+            document.querySelectorAll('.service-row[data-preview]').forEach(row => {
+                // ホバーでプレビュー表示
+                row.addEventListener('mouseenter', () => {
+                    const imgPath = row.getAttribute('data-preview');
+                    servicesPreviewImg.src = imgPath;
+                    
+                    // カードの位置に合わせてプレビューを移動
+                    const rowRect = row.getBoundingClientRect();
+                    const stickyRect = servicesStickyCol.getBoundingClientRect();
+                    const topOffset = rowRect.top - stickyRect.top + (rowRect.height / 2) - 125;
+                    servicesPreviewBox.style.top = Math.max(60, topOffset) + 'px';
+                    
+                    servicesPreviewImg.classList.add('visible');
+                });
+                row.addEventListener('mouseleave', () => {
+                    servicesPreviewImg.classList.remove('visible');
+                });
+                // クリックでモーダル表示
+                row.addEventListener('click', () => {
+                    const imgPath = row.getAttribute('data-preview');
+                    const tagEl = row.querySelector('.service-tag');
+                    const title = tagEl ? tagEl.textContent.replace('事例：', '').replace(' →', '') : '事例紹介';
+                    caseModalImg.src = imgPath;
+                    caseModalTitle.textContent = title + ' - 事例紹介';
+                    caseModal.classList.add('open');
+                    document.body.style.overflow = 'hidden';
+                });
+            });
+
+            const closeCaseModal = () => {
+                caseModal.classList.remove('open');
+                document.body.style.overflow = '';
+            };
+            caseModalClose.addEventListener('click', closeCaseModal);
+            caseModal.addEventListener('click', (e) => {
+                if(e.target === caseModal) closeCaseModal();
             });
 
             const footLinks = document.getElementById('footer-links');
