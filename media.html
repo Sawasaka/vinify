@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+    <title>HR Media - Vinify</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg: #fefefe;
+            --bg-main: #faf9fb;
+            --bg-purple-mid: #7C3AED;
+            --bg-dark: #1a001f;
+            --text: #1a1a1a;
+            --text-light: #fff;
+            --text-muted: #666;
+            --accent: #C026D3;
+            --accent-light: #E879F9;
+            --border: rgba(192, 38, 211, 0.2);
+        }
+
+        * { box-sizing: border-box; }
+        body {
+            margin: 0; padding: 0;
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', 'Noto Sans JP', sans-serif;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .u-caps { text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.7rem; font-weight: 600; color: var(--text); }
+
+        /* ヘッダー */
+        .page-header {
+            padding: 2rem 4rem;
+            background: var(--bg-main);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            color: var(--text);
+        }
+        .logo img {
+            height: 40px;
+            width: auto;
+        }
+        .header-role { 
+            color: var(--accent); 
+            margin-top: 0.5rem;
+            font-size: 0.7rem;
+            letter-spacing: 0.1em;
+        }
+        .back-link {
+            color: var(--text);
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: color 0.3s;
+        }
+        .back-link:hover {
+            color: var(--accent);
+        }
+
+        /* Hero */
+        .media-hero {
+            padding: 6rem 4rem 4rem;
+            background: linear-gradient(180deg, var(--bg-main) 0%, var(--bg) 100%);
+            text-align: center;
+        }
+        .media-hero h1 {
+            font-size: 4rem;
+            font-weight: 900;
+            margin: 0 0 1rem;
+            letter-spacing: -0.02em;
+        }
+        .media-hero p {
+            color: var(--text-muted);
+            font-size: 1rem;
+            margin: 0;
+        }
+
+        /* Filter */
+        .filter-section {
+            padding: 2rem 4rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        .filter-btn {
+            background: transparent;
+            border: 1px solid var(--border);
+            padding: 0.5rem 1.2rem;
+            border-radius: 100px;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .filter-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+        .filter-btn.active {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: #fff;
+        }
+
+        /* Media Grid */
+        .media-section {
+            padding: 4rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .media-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+        .media-card {
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            background: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .media-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(192, 38, 211, 0.15);
+        }
+        .media-card.hidden {
+            display: none;
+        }
+        .media-card-img {
+            width: 100%;
+            height: 200px;
+            overflow: hidden;
+            background: linear-gradient(135deg, #f3eaf8 0%, #e8dff0 100%);
+        }
+        .media-card-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .media-card-content {
+            padding: 1.2rem;
+        }
+        .media-card-title {
+            font-size: 1rem;
+            font-weight: 600;
+            margin: 0 0 0.8rem;
+            line-height: 1.5;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .media-card-meta {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+        .media-card-date {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+        .media-card-tag {
+            background: var(--accent);
+            color: #fff;
+            padding: 0.2rem 0.6rem;
+            border-radius: 100px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        /* Modal */
+        .media-modal-wrap {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.8);
+            z-index: 9999;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+        .media-modal-wrap.active {
+            display: flex;
+        }
+        .media-modal {
+            background: #fff;
+            border-radius: 12px;
+            max-width: 800px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+        }
+        .media-modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 2rem;
+            cursor: pointer;
+            color: var(--text-muted);
+            z-index: 10;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: background 0.3s;
+        }
+        .media-modal-close:hover {
+            background: rgba(0,0,0,0.05);
+        }
+        .media-modal-img {
+            width: 100%;
+            height: 300px;
+            overflow: hidden;
+            background: linear-gradient(135deg, #f3eaf8 0%, #e8dff0 100%);
+        }
+        .media-modal-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .media-modal-content {
+            padding: 2rem;
+        }
+        .media-modal-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0 0 1rem;
+            line-height: 1.4;
+        }
+        .media-modal-date {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            display: block;
+            margin-bottom: 1.5rem;
+        }
+        .media-modal-body {
+            line-height: 1.8;
+            color: var(--text);
+        }
+        .media-modal-body h3 {
+            font-size: 1.2rem;
+            margin: 2rem 0 1rem;
+            color: var(--text);
+        }
+        .media-modal-body p {
+            margin: 0 0 1rem;
+        }
+        .media-modal-body ul {
+            margin: 1rem 0;
+            padding-left: 1.5rem;
+        }
+        .media-modal-body li {
+            margin-bottom: 0.5rem;
+        }
+        .media-modal-body table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+        .media-modal-body th,
+        .media-modal-body td {
+            border: 1px solid var(--border);
+            padding: 0.75rem;
+            text-align: left;
+        }
+        .media-modal-body th {
+            background: var(--bg-main);
+            font-weight: 600;
+        }
+        .media-modal-link {
+            display: inline-block;
+            margin-top: 1.5rem;
+            padding: 0.8rem 2rem;
+            background: var(--accent);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 100px;
+            font-size: 0.85rem;
+            transition: opacity 0.3s;
+        }
+        .media-modal-link:hover {
+            opacity: 0.8;
+        }
+
+        /* Footer */
+        .page-footer {
+            background: linear-gradient(180deg, var(--bg-dark) 0%, #0d0010 100%);
+            color: var(--text-light);
+            padding: 3rem 4rem;
+            text-align: center;
+        }
+        .page-footer a {
+            color: var(--accent-light);
+            text-decoration: none;
+        }
+        .page-footer a:hover {
+            text-decoration: underline;
+        }
+        .footer-copy {
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.5);
+            margin-top: 1rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .media-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        @media (max-width: 768px) {
+            .page-header {
+                padding: 1.5rem 2rem;
+            }
+            .media-hero {
+                padding: 4rem 2rem 3rem;
+            }
+            .media-hero h1 {
+                font-size: 2.5rem;
+            }
+            .filter-section {
+                padding: 1.5rem 2rem;
+            }
+            .media-section {
+                padding: 2rem;
+            }
+            .media-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            .media-modal {
+                max-width: 95%;
+            }
+            .media-modal-img {
+                height: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="page-header">
+        <a href="index.html" class="logo">
+            <img src="image/vinify_logo1.png" alt="Vinify">
+            <span class="header-role">HR Solutions</span>
+        </a>
+        <a href="index.html" class="back-link">← Back to Home</a>
+    </header>
+
+    <!-- Hero -->
+    <section class="media-hero">
+        <h1>HR Insights</h1>
+        <p>人事・組織に関するVinifyのナレッジを発信</p>
+    </section>
+
+    <!-- Filter -->
+    <div class="filter-section">
+        <button class="filter-btn active" data-filter="all">ALL</button>
+        <button class="filter-btn" data-filter="採用">採用</button>
+        <button class="filter-btn" data-filter="評価">評価</button>
+        <button class="filter-btn" data-filter="組織">組織</button>
+        <button class="filter-btn" data-filter="CHRO">CHRO</button>
+        <button class="filter-btn" data-filter="1on1">1on1</button>
+    </div>
+
+    <!-- Media Grid -->
+    <section class="media-section">
+        <div class="media-grid" id="media-grid">
+            <!-- Cards will be generated by JavaScript -->
+        </div>
+    </section>
+
+    <!-- Modal -->
+    <div class="media-modal-wrap" id="media-modal-wrap">
+        <div class="media-modal">
+            <button class="media-modal-close" id="media-modal-close">×</button>
+            <div class="media-modal-img">
+                <img id="media-modal-img" src="" alt="">
+            </div>
+            <div class="media-modal-content">
+                <h2 class="media-modal-title" id="media-modal-title"></h2>
+                <span class="media-modal-date" id="media-modal-date"></span>
+                <div class="media-modal-body" id="media-modal-body"></div>
+                <a href="#" class="media-modal-link" id="media-modal-link">記事を読む →</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="page-footer">
+        <a href="index.html">株式会社ビニファイ</a>
+        <p class="footer-copy">© 2025 Vinify Inc. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // 記事データ
+        const mediaArticles = [
+            {
+                id: 1,
+                title: 'スタートアップの採用戦略：限られたリソースで優秀な人材を獲得する方法',
+                date: '2025.01.02',
+                category: '採用',
+                image: 'https://via.placeholder.com/400x250/f3eaf8/666?text=Article+1',
+                body: `
+                    <p>スタートアップ企業にとって、優秀な人材の獲得は成長の鍵を握る重要な課題です。しかし、大企業と比較してリソースが限られている中で、どのように採用活動を進めればよいのでしょうか。</p>
+                    
+                    <h3>1. 採用ブランディングの重要性</h3>
+                    <p>まず重要なのは、自社の魅力を明確に伝えることです。給与や福利厚生だけでなく、ミッション・ビジョン・バリューを明確にし、候補者に「この会社で働きたい」と思ってもらえるようなブランディングが必要です。</p>
+                    <ul>
+                        <li>会社のストーリーを発信する</li>
+                        <li>社員インタビューを公開する</li>
+                        <li>オフィス環境や働き方を可視化する</li>
+                        <li>技術ブログやイベント登壇で専門性をアピール</li>
+                    </ul>
+                    
+                    <h3>2. リファラル採用の活用</h3>
+                    <p>スタートアップにとって最も効果的な採用チャネルの一つがリファラル採用です。社員のネットワークを活用することで、カルチャーフィットした人材を効率的に獲得できます。</p>
+                    
+                    <table>
+                        <tr><th>採用チャネル</th><th>コスト</th><th>質</th><th>スピード</th></tr>
+                        <tr><td>リファラル</td><td>低</td><td>高</td><td>中</td></tr>
+                        <tr><td>エージェント</td><td>高</td><td>中〜高</td><td>高</td></tr>
+                        <tr><td>求人媒体</td><td>中</td><td>中</td><td>中</td></tr>
+                        <tr><td>ダイレクトスカウト</td><td>中</td><td>高</td><td>低</td></tr>
+                    </table>
+                    
+                    <h3>3. 選考プロセスの最適化</h3>
+                    <p>優秀な人材は複数の企業からオファーを受けていることが多いため、選考スピードも重要な差別化要因になります。無駄な面接を削減し、意思決定を迅速に行える体制を整えましょう。</p>
+                `
+            },
+            {
+                id: 2,
+                title: '評価制度の設計：公平性と納得感を両立させるポイント',
+                date: '2024.12.20',
+                category: '評価',
+                image: 'https://via.placeholder.com/400x250/f3eaf8/666?text=Article+2',
+                body: `
+                    <p>人事評価制度は、社員のモチベーションや組織の生産性に大きな影響を与えます。公平性と納得感を両立させた評価制度を設計するためのポイントを解説します。</p>
+                    
+                    <h3>1. 評価基準の明確化</h3>
+                    <p>評価基準があいまいだと、評価者によってばらつきが生じ、被評価者の納得感が低下します。職種・等級ごとに具体的な評価項目と基準を設定しましょう。</p>
+                    <ul>
+                        <li>成果（定量的な目標達成度）</li>
+                        <li>行動（バリューの体現度）</li>
+                        <li>能力（スキルの習得・向上）</li>
+                    </ul>
+                    
+                    <h3>2. 評価プロセスの透明性</h3>
+                    <p>評価がどのようなプロセスで決定されるのかを事前に共有することで、社員の納得感が高まります。評価会議の運営方法や、最終決定までのフローを明文化しましょう。</p>
+                    
+                    <h3>3. フィードバックの質の向上</h3>
+                    <p>評価結果を伝えるだけでなく、今後の成長に向けた具体的なフィードバックを行うことが重要です。マネージャーのフィードバックスキル向上のための研修も検討しましょう。</p>
+                    
+                    <table>
+                        <tr><th>評価制度の要素</th><th>ポイント</th></tr>
+                        <tr><td>目標設定</td><td>SMART原則に基づく具体的な目標</td></tr>
+                        <tr><td>中間レビュー</td><td>四半期ごとの進捗確認と軌道修正</td></tr>
+                        <tr><td>最終評価</td><td>成果と行動の両面から総合評価</td></tr>
+                        <tr><td>報酬連動</td><td>評価結果と報酬の関係性を明確化</td></tr>
+                    </table>
+                `
+            },
+            {
+                id: 3,
+                title: 'リモートワーク時代の組織文化づくり',
+                date: '2024.12.15',
+                category: '組織',
+                image: 'https://via.placeholder.com/400x250/f3eaf8/666?text=Article+3',
+                body: `
+                    <p>リモートワークが一般化する中、物理的な距離を超えて組織の一体感を醸成することが重要な経営課題となっています。</p>
+                    
+                    <h3>1. 意図的なコミュニケーション設計</h3>
+                    <p>オフィスでの偶発的な会話が減少する分、意図的にコミュニケーションの機会を設計する必要があります。</p>
+                    <ul>
+                        <li>定期的なオンライン雑談会の開催</li>
+                        <li>バーチャルオフィスツールの活用</li>
+                        <li>非同期コミュニケーションのルール整備</li>
+                        <li>四半期ごとのオフラインイベント</li>
+                    </ul>
+                    
+                    <h3>2. ドキュメント文化の構築</h3>
+                    <p>リモート環境では、暗黙知を形式知化することが重要です。意思決定の背景や業務プロセスをドキュメント化し、情報格差を防ぎましょう。</p>
+                    
+                    <h3>3. 心理的安全性の確保</h3>
+                    <p>画面越しのコミュニケーションでは、表情や空気感が伝わりにくくなります。1on1ミーティングを定期的に実施し、メンバーの状態を把握することが大切です。</p>
+                `
+            },
+            {
+                id: 4,
+                title: 'CHRO機能の内製化 vs 外部活用、どちらが正解？',
+                date: '2024.12.10',
+                category: 'CHRO',
+                image: 'https://via.placeholder.com/400x250/f3eaf8/666?text=Article+4',
+                body: `
+                    <p>企業の成長フェーズに応じて、人事機能をどこまで内製化すべきかは重要な経営判断です。CHRO機能の内製化と外部活用、それぞれのメリット・デメリットを整理します。</p>
+                    
+                    <h3>内製化のメリット</h3>
+                    <ul>
+                        <li>自社の文化・事業への深い理解</li>
+                        <li>迅速な意思決定と実行</li>
+                        <li>長期的なナレッジの蓄積</li>
+                        <li>経営との密接な連携</li>
+                    </ul>
+                    
+                    <h3>外部活用のメリット</h3>
+                    <ul>
+                        <li>専門性の高いノウハウの即時活用</li>
+                        <li>固定費の変動費化</li>
+                        <li>客観的な視点の導入</li>
+                        <li>ベストプラクティスの適用</li>
+                    </ul>
+                    
+                    <h3>フェーズ別の最適解</h3>
+                    <table>
+                        <tr><th>企業フェーズ</th><th>推奨アプローチ</th></tr>
+                        <tr><td>シード〜アーリー</td><td>外部活用メイン + 採用のみ内製</td></tr>
+                        <tr><td>シリーズA〜B</td><td>人事マネージャー採用 + 外部パートナー</td></tr>
+                        <tr><td>シリーズC以降</td><td>CHRO採用による内製化推進</td></tr>
+                    </table>
+                `
+            },
+            {
+                id: 5,
+                title: '採用ブランディングの基本：候補者に選ばれる企業になるには',
+                date: '2024.12.05',
+                category: '採用',
+                image: 'https://via.placeholder.com/400x250/f3eaf8/666?text=Article+5',
+                body: `
+                    <p>売り手市場が続く中、企業が候補者を選ぶだけでなく、候補者に選ばれる企業になることが求められています。採用ブランディングの基本を解説します。</p>
+                    
+                    <h3>1. EVP（Employee Value Proposition）の策定</h3>
+                    <p>自社で働くことの価値を明確にし、言語化します。競合他社との差別化ポイントを整理し、ターゲット人材に響くメッセージを設計しましょう。</p>
+                    
+                    <h3>2. タッチポイントの最適化</h3>
+                    <ul>
+                        <li>採用サイトのUX改善</li>
+                        <li>SNSでの情報発信</li>
+                        <li>社員による口コミの促進</li>
+                        <li>説明会・イベントの質向上</li>
+                    </ul>
+                    
+                    <h3>3. 候補者体験（CX）の設計</h3>
+                    <p>応募から内定承諾までの候補者体験を設計し、すべてのタッチポイントで一貫したブランド体験を提供することが重要です。</p>
+                `
+            },
+            {
+                id: 6,
+                title: '1on1ミーティングを効果的に運用するためのフレームワーク',
+                date: '2024.11.28',
+                category: '1on1',
+                image: 'https://via.placeholder.com/400x250/f3eaf8/666?text=Article+6',
+                body: `
+                    <p>1on1ミーティングは、マネージャーとメンバーの信頼関係構築や成長支援に欠かせない施策です。効果的に運用するためのフレームワークを紹介します。</p>
+                    
+                    <h3>1. 1on1の目的を明確にする</h3>
+                    <ul>
+                        <li>業務の進捗確認ではなく、メンバーのための時間</li>
+                        <li>キャリア開発・成長支援</li>
+                        <li>課題や悩みの早期発見</li>
+                        <li>信頼関係の構築</li>
+                    </ul>
+                    
+                    <h3>2. 効果的な質問の例</h3>
+                    <table>
+                        <tr><th>カテゴリ</th><th>質問例</th></tr>
+                        <tr><td>状態確認</td><td>最近、仕事で楽しいと感じることは？</td></tr>
+                        <tr><td>課題発見</td><td>困っていることや、サポートが欲しいことは？</td></tr>
+                        <tr><td>成長支援</td><td>半年後、どんなスキルを身につけていたい？</td></tr>
+                        <tr><td>フィードバック</td><td>私のマネジメントで改善してほしいことは？</td></tr>
+                    </table>
+                    
+                    <h3>3. 継続的な改善</h3>
+                    <p>1on1の質を高めるために、マネージャー同士での情報共有や、外部研修の活用も検討しましょう。</p>
+                `
+            },
+            {
+                id: 7,
+                title: 'エンゲージメント向上のための施策設計',
+                date: '2024.11.20',
+                category: '組織',
+                image: 'https://via.placeholder.com/400x250/f3eaf8/666?text=Article+7',
+                body: `
+                    <p>社員エンゲージメントは、生産性や離職率に大きな影響を与えます。効果的なエンゲージメント向上施策の設計方法を解説します。</p>
+                    
+                    <h3>1. 現状把握のためのサーベイ設計</h3>
+                    <p>エンゲージメントサーベイを実施し、組織の現状を定量的に把握することが第一歩です。</p>
+                    
+                    <h3>2. 課題の特定と優先順位付け</h3>
+                    <p>サーベイ結果から課題を特定し、インパクトと実現可能性の観点から優先順位をつけます。</p>
+                    
+                    <h3>3. 施策の実行とモニタリング</h3>
+                    <p>施策を実行した後は、定期的にパルスサーベイを行い、効果を測定・改善していきましょう。</p>
+                `
+            },
+            {
+                id: 8,
+                title: '等級制度の設計：職能型と職務型の選び方',
+                date: '2024.11.15',
+                category: '評価',
+                image: 'https://via.placeholder.com/400x250/f3eaf8/666?text=Article+8',
+                body: `
+                    <p>等級制度は人事制度の根幹です。職能型と職務型、それぞれの特徴を理解し、自社に最適な制度を選択しましょう。</p>
+                    
+                    <h3>職能型等級制度</h3>
+                    <ul>
+                        <li>人の能力に基づいて等級を決定</li>
+                        <li>日本企業で広く採用</li>
+                        <li>長期雇用・人材育成と親和性が高い</li>
+                    </ul>
+                    
+                    <h3>職務型等級制度</h3>
+                    <ul>
+                        <li>職務（ジョブ）に基づいて等級を決定</li>
+                        <li>外資系企業で広く採用</li>
+                        <li>市場価値との連動性が高い</li>
+                    </ul>
+                    
+                    <h3>ハイブリッド型の検討</h3>
+                    <p>近年は、両者のメリットを取り入れたハイブリッド型を採用する企業も増えています。</p>
+                `
+            },
+            {
+                id: 9,
+                title: 'オンボーディングプログラムの設計ポイント',
+                date: '2024.11.10',
+                category: '採用',
+                image: 'https://via.placeholder.com/400x250/f3eaf8/666?text=Article+9',
+                body: `
+                    <p>新入社員の早期戦力化と定着率向上のために、オンボーディングプログラムの設計は重要です。</p>
+                    
+                    <h3>1. 入社前フェーズ</h3>
+                    <p>内定から入社までの期間も重要なオンボーディング期間です。定期的なコミュニケーションで不安を解消しましょう。</p>
+                    
+                    <h3>2. 入社1週目</h3>
+                    <p>会社の理念・事業・組織についてのインプットと、必要なツール・アクセス権限の整備を行います。</p>
+                    
+                    <h3>3. 入社1〜3ヶ月</h3>
+                    <p>OJTとメンター制度を組み合わせ、実務を通じた学習を支援します。定期的な振り返りの場を設けることも大切です。</p>
+                `
+            }
+        ];
+
+        // カードを生成
+        const mediaGrid = document.getElementById('media-grid');
+        mediaArticles.forEach(article => {
+            const card = document.createElement('div');
+            card.className = 'media-card';
+            card.dataset.article = article.id;
+            card.dataset.category = article.category;
+            card.innerHTML = `
+                <div class="media-card-img">
+                    <img src="${article.image}" alt="${article.title}">
+                </div>
+                <div class="media-card-content">
+                    <h3 class="media-card-title">${article.title}</h3>
+                    <div class="media-card-meta">
+                        <span class="media-card-date">${article.date}</span>
+                        <span class="media-card-tag">${article.category}</span>
+                    </div>
+                </div>
+            `;
+            mediaGrid.appendChild(card);
+        });
+
+        // フィルター機能
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const mediaCards = document.querySelectorAll('.media-card');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                const filter = btn.dataset.filter;
+                mediaCards.forEach(card => {
+                    if (filter === 'all' || card.dataset.category === filter) {
+                        card.classList.remove('hidden');
+                    } else {
+                        card.classList.add('hidden');
+                    }
+                });
+            });
+        });
+
+        // モーダル機能
+        const modalWrap = document.getElementById('media-modal-wrap');
+        const modalClose = document.getElementById('media-modal-close');
+        const modalImg = document.getElementById('media-modal-img');
+        const modalTitle = document.getElementById('media-modal-title');
+        const modalDate = document.getElementById('media-modal-date');
+        const modalBody = document.getElementById('media-modal-body');
+        const modalLink = document.getElementById('media-modal-link');
+
+        document.querySelectorAll('.media-card').forEach(card => {
+            card.addEventListener('click', () => {
+                const articleId = parseInt(card.dataset.article);
+                const article = mediaArticles.find(a => a.id === articleId);
+                if (article) {
+                    modalImg.src = article.image;
+                    modalTitle.textContent = article.title;
+                    modalDate.textContent = article.date;
+                    modalBody.innerHTML = article.body;
+                    modalLink.href = '#';
+                    modalWrap.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                }
+            });
+        });
+
+        modalClose.addEventListener('click', () => {
+            modalWrap.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+
+        modalWrap.addEventListener('click', (e) => {
+            if (e.target === modalWrap) {
+                modalWrap.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+    </script>
+
+</body>
+</html>
+
