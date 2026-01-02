@@ -393,6 +393,80 @@
         }
         .modal-close:hover { transform: scale(1.1); }
         
+        /* Contact Modal - お問い合わせ */
+        .contact-modal-wrap {
+            position: fixed; inset: 0;
+            background: rgba(0,0,0,0.9);
+            z-index: 10002;
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.4s;
+            display: flex; align-items: center; justify-content: center;
+            padding: 2rem;
+            overflow-y: auto;
+        }
+        .contact-modal-wrap.open { opacity: 1; pointer-events: auto; }
+        .contact-modal-content {
+            background: #fff;
+            max-width: 700px;
+            width: 100%;
+            border-radius: 8px;
+            position: relative;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        .contact-modal-header {
+            background: var(--bg-dark);
+            padding: 2rem;
+            text-align: center;
+        }
+        .contact-modal-header h2 {
+            color: #fff;
+            font-size: 1.5rem;
+            margin: 0;
+        }
+        .contact-modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            color: rgba(255,255,255,0.6);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: color 0.3s;
+            z-index: 10;
+        }
+        .contact-modal-close:hover { color: #fff; }
+        .contact-form { padding: 2rem; }
+        .form-group { margin-bottom: 1.5rem; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+        .form-label { display: block; font-size: 0.9rem; font-weight: 500; color: var(--text); margin-bottom: 0.5rem; }
+        .form-label .required { color: #dc2626; margin-left: 0.25rem; }
+        .form-input, .form-textarea {
+            width: 100%; padding: 0.75rem 1rem; border: 1px solid #e5e7eb;
+            border-radius: 4px; font-size: 1rem; font-family: inherit; transition: border-color 0.3s;
+        }
+        .form-input:focus, .form-textarea:focus { outline: none; border-color: var(--accent); }
+        .form-textarea { min-height: 150px; resize: vertical; }
+        .form-checkbox { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1.5rem; }
+        .form-checkbox input { width: 18px; height: 18px; accent-color: var(--accent); }
+        .form-checkbox label { font-size: 0.9rem; color: var(--text-muted); }
+        .form-checkbox a { color: var(--accent); text-decoration: underline; }
+        .form-submit {
+            background: var(--bg-dark); color: #fff; border: none; padding: 1rem 2rem;
+            font-size: 1rem; font-weight: 500; border-radius: 4px; cursor: pointer; transition: all 0.3s;
+        }
+        .form-submit:hover { background: var(--accent); }
+        .form-submit:disabled { background: #9ca3af; cursor: not-allowed; }
+        .contact-success { padding: 3rem 2rem; text-align: center; }
+        .success-icon {
+            width: 60px; height: 60px; background: var(--accent); color: #fff;
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            font-size: 2rem; margin: 0 auto 1.5rem;
+        }
+        .contact-success h3 { font-size: 1.5rem; margin-bottom: 1rem; color: var(--text); }
+        .contact-success p { color: var(--text-muted); margin-bottom: 2rem; line-height: 1.8; }
+
         /* Case Modal - 事例画像用 */
         .case-modal-wrap {
             position: fixed; inset: 0;
@@ -447,34 +521,90 @@
         
         /* Footer - 紫背景 */
         .footer {
-            padding: 6rem 2vw;
+            padding: 4rem 8%;
             background: linear-gradient(180deg, #2d0045 0%, var(--bg-dark) 50%);
             color: var(--text-light);
         }
         .footer .u-caps { color: var(--accent-light); }
+        .footer-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 4rem;
+            margin-bottom: 2rem;
+        }
+        .footer-left { flex: 1; }
+        .footer-brand { margin-bottom: 0.75rem; }
+        .footer-logo { height: 28px; filter: brightness(0) invert(1); opacity: 0.7; }
         .footer-big {
-            font-size: 12vw;
             font-weight: 900;
-            line-height: 0.9;
-            margin-bottom: 4rem;
-            background: linear-gradient(135deg, var(--text-light) 0%, var(--accent-light) 100%);
+            line-height: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 0.1rem;
+        }
+        .footer-line1 {
+            font-size: 3rem;
+            color: #fff;
+            letter-spacing: -0.02em;
+        }
+        .footer-line2 {
+            font-size: 3rem;
+            background: linear-gradient(90deg, #fff 0%, var(--accent-light) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            letter-spacing: -0.02em;
+            padding-left: 0.75rem;
         }
-        .footer-links a {
-            color: rgba(255,255,255,0.6);
+        .footer-right {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.2rem;
+            margin-top: 1.75rem;
+        }
+        .footer-cta {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            border: 2px solid var(--accent-light);
+            border-radius: 100px;
+            color: var(--accent-light);
             text-decoration: none;
             font-size: 1rem;
-            margin-right: 2rem;
+            font-weight: 500;
             transition: all 0.3s;
         }
-        .footer-links a:hover { color: var(--accent-light); }
-        .footer-copy {
-            margin-top: 4rem; 
-            opacity: 0.4; 
-            font-size: 0.75rem;
+        .footer-cta:hover { background: var(--accent-light); color: var(--bg-dark); }
+        .footer-info { text-align: center; }
+        .footer-company-name { font-size: 1rem; font-weight: 600; color: #fff; margin-bottom: 0.5rem; }
+        .footer-email {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            color: rgba(255,255,255,0.6);
         }
+        .footer-email a { color: rgba(255,255,255,0.6); text-decoration: none; font-size: 0.9rem; transition: all 0.3s; }
+        .footer-email a:hover { color: var(--accent-light); }
+        .footer-company-info {
+            display: flex;
+            gap: 3rem;
+            padding: 2rem 0;
+            flex-wrap: wrap;
+        }
+        .footer-company-item { display: flex; flex-direction: column; gap: 0.25rem; }
+        .footer-company-label { font-size: 0.65rem; color: rgba(255,255,255,0.35); text-transform: uppercase; letter-spacing: 0.1em; }
+        .footer-company-value { font-size: 0.8rem; color: rgba(255,255,255,0.7); }
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1.5rem;
+        }
+        .footer-privacy { color: rgba(255,255,255,0.5); text-decoration: none; font-size: 0.8rem; transition: all 0.3s; }
+        .footer-privacy:hover { color: var(--accent-light); }
+        .footer-copy { opacity: 0.4; font-size: 0.75rem; }
 
         /* Mobile */
         @media (max-width: 900px) {
@@ -512,8 +642,18 @@
             .company-table td { padding-top: 0.5rem; }
 
             .footer { padding: 3rem 1.5rem; }
-            .footer-big { font-size: 15vw; }
-            .footer-links a { display: block; margin-bottom: 1rem; font-size: 1rem; }
+            .footer-top { flex-direction: column; gap: 2rem; }
+            .footer-line1, .footer-line2 { font-size: 2rem; }
+            .footer-line2 { padding-left: 0.5rem; }
+            .footer-right { align-items: flex-start; margin-top: 0; }
+            .footer-info { text-align: left; }
+            .footer-email { justify-content: flex-start; }
+            .footer-cta { padding: 0.8rem 1.5rem; font-size: 0.9rem; }
+            .footer-company-info { flex-direction: column; gap: 1.5rem; }
+            .footer-bottom { flex-direction: column; gap: 1rem; align-items: flex-start; }
+            .contact-modal-wrap { padding: 1rem; }
+            .contact-form { padding: 1.5rem; }
+            .form-row { grid-template-columns: 1fr; gap: 0; }
 
             .modal-content { grid-template-columns: 1fr; }
             .modal-img { height: 250px; }
@@ -547,6 +687,53 @@
                 <button class="case-modal-close" id="case-modal-close">✕</button>
             </div>
             <img src="" alt="" class="case-modal-img" id="case-modal-img">
+        </div>
+    </div>
+
+    <div class="contact-modal-wrap" id="contact-modal-wrap">
+        <div class="contact-modal-content">
+            <button class="contact-modal-close" id="contact-modal-close">✕</button>
+            <div class="contact-modal-header">
+                <h2>資料請求・お問い合わせ</h2>
+            </div>
+            <form class="contact-form" id="contact-form" action="https://formsubmit.co/info@vinify.co.jp" method="POST">
+                <input type="hidden" name="_subject" value="【Vinify】資料請求・お問い合わせがありました">
+                <input type="hidden" name="_captcha" value="false">
+                <input type="hidden" name="_template" value="table">
+                <div class="form-group">
+                    <label class="form-label">会社名<span class="required">*</span></label>
+                    <input type="text" name="company" class="form-input" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">氏名<span class="required">*</span></label>
+                        <input type="text" name="name" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">電話番号</label>
+                        <input type="tel" name="phone" class="form-input">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">メールアドレス<span class="required">*</span></label>
+                    <input type="email" name="email" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">ご相談内容（任意）</label>
+                    <textarea name="message" class="form-textarea" placeholder="ご質問やご要望がありましたらご記入ください"></textarea>
+                </div>
+                <div class="form-checkbox">
+                    <input type="checkbox" id="privacy-agree" required>
+                    <label for="privacy-agree"><a href="privacy.html" target="_blank">個人情報保護方針</a>に同意します</label>
+                </div>
+                <button type="submit" class="form-submit">送信する</button>
+            </form>
+            <div class="contact-success" id="contact-success" style="display: none;">
+                <div class="success-icon">✓</div>
+                <h3>送信完了</h3>
+                <p>お問い合わせありがとうございます。<br>内容を確認の上、担当者よりご連絡いたします。</p>
+                <button class="form-submit" id="close-success">閉じる</button>
+            </div>
         </div>
     </div>
 
@@ -649,10 +836,51 @@
     </section>
 
     <footer class="footer">
-        <div class="footer-big">LET'S TALK.</div>
-        <div class="footer-links" id="footer-links"></div>
-        <div class="footer-copy">
-            &copy; <span id="year"></span> Vinify Inc.
+        <div class="footer-top">
+            <div class="footer-left">
+                <div class="footer-brand">
+                    <img src="image/vinify_logo1.png" alt="Vinify" class="footer-logo">
+                </div>
+                <div class="footer-big">
+                    <span class="footer-line1">TALENT</span>
+                    <span class="footer-line2">BLOSSOM</span>
+                </div>
+            </div>
+            <div class="footer-right">
+                <a href="#" class="footer-cta" id="open-contact-modal">お問い合わせはこちらから</a>
+                <div class="footer-info">
+                    <div class="footer-company">株式会社ビニファイ</div>
+                    <div class="footer-email">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                            <polyline points="22,6 12,13 2,6"></polyline>
+                        </svg>
+                        <a href="mailto:info@vinify.co.jp">info@vinify.co.jp</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-company-info">
+            <div class="footer-company-item">
+                <span class="footer-company-label">Company</span>
+                <span class="footer-company-value">株式会社ビニファイ</span>
+            </div>
+            <div class="footer-company-item">
+                <span class="footer-company-label">Established</span>
+                <span class="footer-company-value">2021年11月</span>
+            </div>
+            <div class="footer-company-item">
+                <span class="footer-company-label">Address</span>
+                <span class="footer-company-value">東京都渋谷区神宮前6-23-4 桑野ビル2F</span>
+            </div>
+            <div class="footer-company-item">
+                <span class="footer-company-label">Representative</span>
+                <span class="footer-company-value">立花 隼人 / 横山 和彦</span>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <a href="privacy.html" class="footer-privacy">プライバシーポリシー</a>
+            <div class="footer-copy">&copy; <span id="year"></span> Vinify Inc.</div>
         </div>
     </footer>
 
@@ -823,12 +1051,67 @@
                 if(e.target === caseModal) closeCaseModal();
             });
 
-            const footLinks = document.getElementById('footer-links');
-            config.links.forEach(l => {
-                const a = document.createElement('a');
-                a.href = l.url;
-                a.textContent = l.label;
-                footLinks.appendChild(a);
+            // お問い合わせモーダル
+            const contactModal = document.getElementById('contact-modal-wrap');
+            const contactModalClose = document.getElementById('contact-modal-close');
+            const openContactBtn = document.getElementById('open-contact-modal');
+            
+            openContactBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                contactModal.classList.add('open');
+                document.body.style.overflow = 'hidden';
+            });
+            
+            const closeContactModal = () => {
+                contactModal.classList.remove('open');
+                document.body.style.overflow = '';
+            };
+            contactModalClose.addEventListener('click', closeContactModal);
+            contactModal.addEventListener('click', (e) => {
+                if(e.target === contactModal) closeContactModal();
+            });
+
+            // フォーム送信
+            const contactForm = document.getElementById('contact-form');
+            const contactSuccess = document.getElementById('contact-success');
+            const closeSuccessBtn = document.getElementById('close-success');
+            
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const formData = new FormData(contactForm);
+                const submitBtn = contactForm.querySelector('.form-submit');
+                submitBtn.disabled = true;
+                submitBtn.textContent = '送信中...';
+                
+                fetch(contactForm.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: { 'Accept': 'application/json' }
+                })
+                .then(response => {
+                    if (response.ok) {
+                        contactForm.style.display = 'none';
+                        document.querySelector('.contact-modal-header').style.display = 'none';
+                        contactSuccess.style.display = 'block';
+                        contactForm.reset();
+                    } else {
+                        alert('送信に失敗しました。もう一度お試しください。');
+                    }
+                })
+                .catch(() => alert('送信に失敗しました。もう一度お試しください。'))
+                .finally(() => {
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = '送信する';
+                });
+            });
+            
+            closeSuccessBtn.addEventListener('click', () => {
+                closeContactModal();
+                setTimeout(() => {
+                    contactForm.style.display = 'block';
+                    document.querySelector('.contact-modal-header').style.display = 'block';
+                    contactSuccess.style.display = 'none';
+                }, 300);
             });
 
             document.addEventListener('mousemove', (e) => {
