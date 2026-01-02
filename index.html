@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+    <title>Vinify - HR Solutions</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg: #faf8fc;
+            --bg-main: #f0e8f5;
+            --bg-purple-mid: #7C3AED;
+            --bg-dark: #1a001f;
+            --text: #1a1a1a;
+            --text-light: #fff;
+            --text-muted: #666;
+            --accent: #C026D3;
+            --accent-light: #E879F9;
+            --border: rgba(192, 38, 211, 0.2);
+            --border-purple: rgba(255,255,255,0.2);
+            --border-width: 1px;
+        }
+
+        * { box-sizing: border-box; }
+        body {
+            margin: 0; padding: 0;
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', 'Noto Sans JP', sans-serif;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .u-caps { text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.7rem; font-weight: 600; color: var(--text-muted); }
+        
+        /* ローダー */
+        .loader {
+            position: fixed; inset: 0;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--bg-purple-mid) 50%, var(--bg-dark) 100%);
+            z-index: 9999;
+            display: flex; align-items: center; justify-content: center;
+            transition: transform 0.8s cubic-bezier(0.76, 0, 0.24, 1);
+        }
+        .loader-text { font-size: 4rem; font-weight: 900; color: #fff; letter-spacing: 0.05em; }
+        .loader.hide { transform: translateY(-100%); }
+
+        /* ヘッダー - 薄紫背景 */
+        header {
+            min-height: 90vh;
+            display: flex; flex-direction: column; justify-content: space-between;
+            padding: 2vw;
+            position: relative;
+            background: var(--bg-main);
+            border-bottom: var(--border-width) solid var(--border);
+        }
+        .header-top { display: flex; justify-content: space-between; align-items: flex-start; }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        .logo img {
+            height: 40px;
+            width: auto;
+        }
+        
+        .header-role { color: var(--accent); }
+        
+        .hero-title {
+            font-size: 15vw;
+            line-height: 0.9;
+            font-weight: 900;
+            letter-spacing: -0.04em;
+            margin: 0;
+            text-transform: uppercase;
+            color: var(--text);
+        }
+        .hero-title span { 
+            display: block; 
+            opacity: 0; 
+            transform: translateY(100px); 
+            transition: 1s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .hero-title .accent-text { 
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .loaded .hero-title span { opacity: 1; transform: translateY(0); }
+
+        /* マーキー */
+        .marquee-wrap {
+            overflow: hidden; white-space: nowrap;
+            border-bottom: none;
+            padding: 1.5rem 0;
+            background: linear-gradient(90deg, var(--accent) 0%, var(--bg-purple-mid) 50%, var(--accent) 100%);
+        }
+        .marquee-content {
+            display: inline-block;
+            animation: marquee 20s linear infinite;
+        }
+        .marquee-text {
+            font-size: 3rem;
+            font-weight: 900;
+            -webkit-text-stroke: 1px rgba(255,255,255,0.8);
+            color: transparent;
+            margin-right: 2rem;
+        }
+        @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+        /* グリッドレイアウト */
+        .grid-section {
+            display: grid;
+            grid-template-columns: 30% 70%;
+            border-bottom: var(--border-width) solid var(--border);
+        }
+        .sticky-col {
+            padding: 3rem 2vw;
+            border-right: var(--border-width) solid var(--border);
+            position: sticky; top: 0; height: 100vh;
+            background: inherit;
+            display: flex; flex-direction: column; justify-content: space-between;
+            z-index: 1;
+        }
+        .content-col { padding: 0; position: relative; }
+        
+        /* 全セクション統一背景 */
+        .section-1, .section-2, .section-3 { 
+            background: var(--bg-main);
+            color: var(--text);
+        }
+        .section-1 .sticky-col,
+        .section-2 .sticky-col,
+        .section-3 .sticky-col { 
+            background: var(--bg-main); 
+        }
+        
+        .section-1 .big-lead .highlight { 
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        /* Works */
+        .section-2 .work-num { color: var(--accent); }
+        .section-2 .work-title { color: var(--text); }
+        .section-2 .work-cat { 
+            border-color: var(--accent); 
+            color: var(--accent);
+        }
+        .section-2 .work-item:hover { background: rgba(192, 38, 211, 0.08); }
+        .section-2 .work-item:hover .work-cat { 
+            background: var(--accent); 
+            color: var(--text-light);
+        }
+        
+        /* Profile */
+        .section-3 { border-bottom: none; }
+        .section-3 .company-table th { color: var(--accent); }
+        .section-3 .google-map-link { color: var(--accent); border-bottom-color: var(--accent); }
+
+        /* About */
+        .big-lead {
+            font-size: 2.5rem;
+            font-weight: 700;
+            line-height: 1.4;
+            padding: 6rem 4rem;
+            margin: 0;
+            color: var(--text);
+        }
+        .big-lead .highlight { color: var(--accent); }
+        
+        /* Works */
+        .work-item {
+            display: block; position: relative;
+            border-bottom: 1px solid var(--border);
+            padding: 3rem 4rem;
+            transition: background 0.3s;
+            text-decoration: none; color: inherit;
+            cursor: pointer;
+        }
+        .work-item img.check-img { display: none; }
+        .work-item:last-child { border-bottom: none; }
+        .work-item:hover { background: rgba(192, 38, 211, 0.08); }
+        .work-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1rem; }
+        .work-num { font-family: 'Inter'; font-weight: 600; color: var(--accent); font-size: 0.875rem; }
+        .work-title { font-size: 2.5rem; margin: 0; font-weight: 900; line-height: 1; color: var(--text); }
+        .work-cat { 
+            position: absolute; right: 4rem; top: 50%; transform: translateY(-50%);
+            border: 1px solid var(--accent); padding: 0.5rem 1rem; border-radius: 100px;
+            opacity: 0; transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            font-size: 0.75rem; color: var(--accent);
+        }
+        .work-item:hover .work-cat { 
+            opacity: 1; right: 2rem;
+            background: var(--accent); color: #fff;
+        }
+
+        /* 画像ホバー */
+        .cursor-img {
+            position: fixed; width: 350px; height: 250px; object-fit: cover;
+            pointer-events: none; z-index: 10; opacity: 0;
+            transform: scale(0.8);
+            transition: opacity 0.3s, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            border: 3px solid var(--accent-light);
+            box-shadow: 0 25px 80px rgba(192, 38, 211, 0.5), 0 0 40px rgba(232, 121, 249, 0.3);
+            border-radius: 8px;
+        }
+        .cursor-img.active { opacity: 1; transform: scale(1); }
+
+        /* Company Profile */
+        .company-table {
+            width: 100%; border-collapse: collapse;
+        }
+        .company-table tr { border-bottom: 1px solid var(--border); }
+        .company-table th, .company-table td {
+            padding: 1.5rem 2rem; text-align: left; vertical-align: top;
+        }
+        .company-table th { width: 30%; font-weight: 400; color: var(--text-muted); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; }
+        .company-table td { font-weight: 400; line-height: 1.6; font-size: 0.95rem; }
+        .google-map-link {
+            display: inline-block; margin-top: 0.5rem;
+            color: var(--accent); text-decoration: none;
+            font-size: 0.85rem;
+            transition: opacity 0.3s;
+        }
+        .google-map-link:hover { opacity: 0.7; }
+
+        /* Modal */
+        .modal-wrap {
+            position: fixed; inset: 0;
+            background: rgba(0,0,0,0.9);
+            z-index: 10000;
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.4s;
+            display: flex; align-items: center; justify-content: center;
+            padding: 2rem;
+        }
+        .modal-wrap.open { opacity: 1; pointer-events: auto; }
+        
+        .modal-content {
+            background: var(--bg);
+            color: var(--text);
+            max-width: 900px; width: 100%; max-height: 90vh;
+            overflow-y: auto; position: relative;
+            display: grid; grid-template-columns: 1fr 1fr;
+            border-radius: 4px;
+        }
+        .modal-img {
+            width: 100%; height: 100%; object-fit: cover; min-height: 400px;
+        }
+        .modal-info { padding: 3rem; display: flex; flex-direction: column; justify-content: center; }
+        .modal-close {
+            position: absolute; top: 1rem; right: 1rem;
+            width: 40px; height: 40px;
+            background: var(--accent); color: #fff;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; z-index: 10; font-weight: 900;
+            border-radius: 50%;
+            border: none;
+            transition: transform 0.3s;
+        }
+        .modal-close:hover { transform: scale(1.1); }
+        
+        /* Footer - 紫背景 */
+        .footer {
+            padding: 6rem 2vw;
+            background: linear-gradient(180deg, #2d0045 0%, var(--bg-dark) 50%);
+            color: var(--text-light);
+        }
+        .footer .u-caps { color: var(--accent-light); }
+        .footer-big {
+            font-size: 12vw;
+            font-weight: 900;
+            line-height: 0.9;
+            margin-bottom: 4rem;
+            background: linear-gradient(135deg, var(--text-light) 0%, var(--accent-light) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .footer-links a {
+            color: rgba(255,255,255,0.6);
+            text-decoration: none;
+            font-size: 1rem;
+            margin-right: 2rem;
+            transition: all 0.3s;
+        }
+        .footer-links a:hover { color: var(--accent-light); }
+        .footer-copy {
+            margin-top: 4rem; 
+            opacity: 0.4; 
+            font-size: 0.75rem;
+        }
+
+        /* Mobile */
+        @media (max-width: 900px) {
+            header { min-height: 50vh; padding: 1.5rem; }
+            .hero-title { font-size: 18vw; margin-top: 2rem; }
+            
+            .grid-section { grid-template-columns: 1fr; }
+            .sticky-col { 
+                position: relative; height: auto; 
+                padding: 1.5rem;
+                border-right: none;
+                border-bottom: var(--border-width) solid var(--border); 
+            }
+            
+            .big-lead { font-size: 1.5rem; padding: 2rem 1.5rem; }
+            .work-item { padding: 2rem 1.5rem; }
+            .work-title { font-size: 1.5rem; margin-top: 0.5rem; }
+            .work-cat { display: none; }
+            .cursor-img { display: none; }
+
+            .company-table th, .company-table td { display: block; width: 100%; padding: 1rem 1.5rem; }
+            .company-table th { padding-bottom: 0; font-size: 0.7rem; }
+            .company-table td { padding-top: 0.5rem; }
+
+            .footer { padding: 3rem 1.5rem; }
+            .footer-big { font-size: 15vw; }
+            .footer-links a { display: block; margin-bottom: 1rem; font-size: 1rem; }
+
+            .modal-content { grid-template-columns: 1fr; }
+            .modal-img { height: 250px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="loader">
+        <div class="loader-text">VINIFY</div>
+    </div>
+
+    <img id="hover-reveal" class="cursor-img" src="" alt="">
+
+    <div class="modal-wrap" id="modal-wrap">
+        <div class="modal-content">
+            <button class="modal-close" id="modal-close">✕</button>
+            <img src="" alt="" class="modal-img" id="modal-img">
+            <div class="modal-info">
+                <span class="u-caps" id="modal-cat" style="margin-bottom:1rem; color: var(--accent);"></span>
+                <h2 id="modal-title" style="font-size: 2rem; line-height:1.1; margin:0 0 1rem 0;"></h2>
+                <p id="modal-desc" style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.8;"></p>
+            </div>
+        </div>
+    </div>
+
+    <header>
+        <div class="header-top">
+            <div class="logo">
+                <img src="image/vinify_logo1.png" alt="Vinify">
+            </div>
+            <div id="brand-role" class="u-caps header-role"></div>
+        </div>
+        <h1 class="hero-title" id="hero-title"></h1>
+    </header>
+
+    <div class="marquee-wrap">
+        <div class="marquee-content" id="marquee-text"></div>
+    </div>
+
+    <section class="grid-section section-1">
+        <div class="sticky-col">
+            <span class="u-caps">01 / Manifesto</span>
+            <div class="u-caps">Philosophy & Mindset</div>
+        </div>
+        <div class="content-col">
+            <p id="main-lead" class="big-lead"></p>
+        </div>
+    </section>
+
+    <section class="grid-section section-2">
+        <div class="sticky-col">
+            <span class="u-caps">02 / Selected Works</span>
+            <div class="u-caps">Case Studies</div>
+        </div>
+        <div class="content-col" id="works-container"></div>
+    </section>
+
+    <section class="grid-section section-3">
+        <div class="sticky-col">
+            <span class="u-caps">03 / Profile</span>
+            <div class="u-caps">About Us</div>
+        </div>
+        <div class="content-col">
+            <table class="company-table">
+                <tr>
+                    <th>Company Name</th>
+                    <td>株式会社ビニファイ</td>
+                </tr>
+                <tr>
+                    <th>Established</th>
+                    <td>2021年11月</td>
+                </tr>
+                <tr>
+                    <th>Address</th>
+                    <td>
+                        〒150-0001<br>
+                        東京都渋谷区神宮前6-23-4 桑野ビル2F<br>
+                        <a href="#" class="google-map-link">Google Map</a>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Business</th>
+                    <td>
+                        人材育成コミュニティVinifyの運営<br>
+                        HR全域を支援する「talent blossom」
+                    </td>
+                </tr>
+                <tr>
+                    <th>Representative</th>
+                    <td>立花 隼人 / 横山 和彦</td>
+                </tr>
+            </table>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-big">LET'S TALK.</div>
+        <div class="footer-links" id="footer-links"></div>
+        <div class="footer-copy">
+            &copy; <span id="year"></span> Vinify Inc.
+        </div>
+    </footer>
+
+    <script>
+        const config = {
+            name: "Vinify",
+            role: "HR Solutions",
+            
+            heroTitle: "GROW<br><span class='accent-text'>INTO</span><br><span class='accent-text'>THE FUTURE.</span>",
+            
+            marquee: "TALENT BLOSSOM / HR CONSULTING / CAREER SUPPORT / RECRUITMENT STRATEGY / ",
+            
+            lead: "私たちは常識を再定義する。<br>ロジックを超えた先に、<br><span class='highlight'>真の感情を動かす存在</span>がある。",
+            
+            workText: {
+                1: { 
+                    title: "株式会社AVIC", 
+                    cat: "人事・組織基盤構築",
+                    desc: "設立間もないスタートアップの「ゼロイチ」上場達成を支えた人事・組織基盤構築プロジェクト。東京証券取引所グロース市場への株式上場を達成。離職率0%を実現し、組織の安定性と持続的な成長基盤を確立。"
+                },
+                2: { 
+                    title: "株式会社ベル", 
+                    cat: "採用戦略",
+                    desc: "実業家オーナーの事業発展を加速させるための「人間力採用」戦略プロジェクト。オーナーの右腕となる優秀な人財確保を実現。少数精鋭の採用に成功。"
+                },
+                3: { 
+                    title: "TELESCOPE Magazine", 
+                    cat: "メディア運営",
+                    desc: "東京エレクトロンの若手研究者獲得のためのWEBメディア運営。東大でのリアルイベントで200名を集客し、採用リードを獲得。新卒採用応募数の増加に貢献。"
+                },
+                4: {
+                    title: "学校法人文理佐藤学園",
+                    cat: "組織変革",
+                    desc: "硬直化した組織体質の変革と事業再生を主導した学校法人再建プロジェクト。粘り強い合意形成により、組織に新しい意識をもたらし、中長期的な成長基盤を構築。"
+                },
+                5: {
+                    title: "株式会社サンプル",
+                    cat: "人材開発",
+                    desc: "次世代リーダー育成プログラムの設計と実行。組織全体のスキルアップと生産性向上を実現。"
+                }
+            },
+
+            links: [
+                { label: "Instagram", url: "#" },
+                { label: "LINE", url: "#" },
+                { label: "Email", url: "mailto:info@vinify.co.jp" }
+            ]
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('brand-role').textContent = config.role;
+            document.getElementById('year').textContent = new Date().getFullYear();
+            
+            const titleEl = document.getElementById('hero-title');
+            titleEl.innerHTML = config.heroTitle.split('<br>').map(line => `<span>${line}</span>`).join('');
+
+            const marqueeEl = document.getElementById('marquee-text');
+            marqueeEl.innerHTML = `<span class="marquee-text">${config.marquee.repeat(4)}</span>`;
+
+            document.getElementById('main-lead').innerHTML = config.lead;
+
+            const worksCont = document.getElementById('works-container');
+            const hoverImg = document.getElementById('hover-reveal');
+            const modal = document.getElementById('modal-wrap');
+            const modalImg = document.getElementById('modal-img');
+            const modalTitle = document.getElementById('modal-title');
+            const modalCat = document.getElementById('modal-cat');
+            const modalDesc = document.getElementById('modal-desc'); 
+            const modalClose = document.getElementById('modal-close');
+
+            for (let i = 1; i <= 18; i++) {
+                const imgPath = `image/image${i}.jpg`;
+                const info = config.workText[i] || { title: `PROJECT ${String(i).padStart(2, '0')}`, cat: "Design Work" };
+
+                const el = document.createElement('div');
+                el.className = 'work-item';
+                el.style.display = 'none';
+
+                el.innerHTML = `
+                    <img src="${imgPath}" class="check-img" 
+                         onload="this.closest('.work-item').style.display = 'block'"
+                         onerror="this.closest('.work-item').remove()">
+                    <div class="work-header">
+                        <span class="work-num">(${String(i).padStart(2, '0')})</span>
+                        <div class="work-cat">${info.cat}</div>
+                    </div>
+                    <h3 class="work-title">${info.title}</h3>
+                `;
+
+                el.addEventListener('mouseenter', () => {
+                    hoverImg.src = imgPath;
+                    hoverImg.classList.add('active');
+                });
+                el.addEventListener('mouseleave', () => {
+                    hoverImg.classList.remove('active');
+                });
+
+                el.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    modalImg.src = imgPath;
+                    modalTitle.textContent = info.title;
+                    modalCat.textContent = info.cat;
+                    modalDesc.textContent = info.desc || "詳細情報が設定されていません。";
+                    modal.classList.add('open');
+                });
+
+                worksCont.appendChild(el);
+            }
+
+            const closeModal = () => modal.classList.remove('open');
+            modalClose.addEventListener('click', closeModal);
+            modal.addEventListener('click', (e) => {
+                if(e.target === modal) closeModal();
+            });
+
+            const footLinks = document.getElementById('footer-links');
+            config.links.forEach(l => {
+                const a = document.createElement('a');
+                a.href = l.url;
+                a.textContent = l.label;
+                footLinks.appendChild(a);
+            });
+
+            document.addEventListener('mousemove', (e) => {
+                const x = e.clientX - 175; 
+                const y = e.clientY - 125;
+                requestAnimationFrame(() => {
+                    hoverImg.style.left = `${x}px`;
+                    hoverImg.style.top = `${y}px`;
+                });
+            });
+
+            setTimeout(() => {
+                document.querySelector('.loader').classList.add('hide');
+                document.body.classList.add('loaded');
+            }, 800);
+        });
+    </script>
+</body>
+</html>
