@@ -151,14 +151,25 @@
         .content-col { padding: 0; position: relative; }
         
         /* 全セクション統一背景 */
-        .section-1, .section-2, .section-3 { 
+        .section-1, .section-3 { 
             background: var(--bg-main);
             color: var(--text);
         }
-        .section-1 .sticky-col,
-        .section-2 .sticky-col,
+        .section-2 {
+            background: linear-gradient(180deg, #ffffff 0%, #f0e6f5 100%) !important;
+            color: var(--text);
+        }
+        .section-2 .content-col {
+            background: transparent;
+        }
+        .section-1 .sticky-col { 
+            background: linear-gradient(135deg, #fefefe 0%, #fdf5f9 100%); 
+        }
         .section-3 .sticky-col { 
             background: var(--bg-main); 
+        }
+        .section-2 .sticky-col {
+            background: transparent;
         }
         
         .section-1 .big-lead .highlight { 
@@ -278,9 +289,10 @@
         .service-row {
             cursor: pointer;
             transition: background 0.3s;
+            background: linear-gradient(135deg, #fefefe 0%, #fdf5f9 100%);
         }
         .service-row:hover {
-            background: rgba(192, 38, 211, 0.05);
+            background: linear-gradient(135deg, #fdf5f9 0%, #f8eef4 100%);
         }
         .service-content-col {
             padding: 3rem 4rem;
@@ -342,6 +354,7 @@
             transition: background 0.3s;
             text-decoration: none; color: inherit;
             cursor: pointer;
+            background: linear-gradient(180deg, #fefefe 0%, #f9f5fb 100%);
         }
         .work-item img.check-img { display: none; }
         .work-item:last-child { border-bottom: none; }
