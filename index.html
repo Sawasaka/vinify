@@ -247,6 +247,164 @@
             margin: 0;
         }
 
+        /* Media Section */
+        .section-4 {
+            background: linear-gradient(180deg, #fefefe 0%, #f5f0f8 100%);
+        }
+        .section-4 .sticky-col {
+            background: transparent;
+        }
+        .media-container {
+            padding: 4rem;
+        }
+        .media-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+        .media-card {
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            background: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+        }
+        .media-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 40px rgba(192, 38, 211, 0.15);
+        }
+        .media-card-img {
+            width: 100%;
+            height: 180px;
+            overflow: hidden;
+        }
+        .media-card-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+        .media-card:hover .media-card-img img {
+            transform: scale(1.05);
+        }
+        .media-card-content {
+            padding: 1.5rem;
+        }
+        .media-card-title {
+            font-size: 1rem;
+            font-weight: 700;
+            line-height: 1.5;
+            margin: 0 0 0.8rem 0;
+            color: var(--text);
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .media-card-date {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Media Modal */
+        .media-modal-wrap {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.9);
+            z-index: 10002;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+        .media-modal-wrap.open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .media-modal {
+            background: #fff;
+            border-radius: 12px;
+            max-width: 800px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+        }
+        .media-modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            width: 40px;
+            height: 40px;
+            border: none;
+            background: var(--bg-dark);
+            color: #fff;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s;
+        }
+        .media-modal-close:hover {
+            background: var(--accent);
+        }
+        .media-modal-img {
+            width: 100%;
+            height: 300px;
+            overflow: hidden;
+        }
+        .media-modal-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .media-modal-content {
+            padding: 2rem;
+        }
+        .media-modal-title {
+            font-size: 1.5rem;
+            font-weight: 900;
+            margin: 0 0 0.5rem 0;
+            color: var(--text);
+            line-height: 1.4;
+        }
+        .media-modal-date {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-family: 'Inter', sans-serif;
+            display: block;
+            margin-bottom: 1.5rem;
+        }
+        .media-modal-excerpt {
+            font-size: 0.95rem;
+            line-height: 1.8;
+            color: var(--text-muted);
+            margin: 0 0 2rem 0;
+        }
+        .media-modal-link {
+            display: inline-block;
+            padding: 0.8rem 2rem;
+            background: var(--accent);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 100px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: background 0.3s, transform 0.3s;
+        }
+        .media-modal-link:hover {
+            background: var(--bg-dark);
+            transform: translateY(-2px);
+        }
+
         /* Services */
         .services-grid {
             display: flex;
@@ -745,6 +903,15 @@
             .profile-card, .profile-card-reverse { flex-direction: column; gap: 1.5rem; }
             .profile-image { width: 200px; }
             .profile-name { font-size: 1.4rem; }
+            
+            .media-container { padding: 2rem 1.5rem; }
+            .media-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+            .media-card-img { height: 200px; }
+            .media-modal { max-width: 95%; }
+            .media-modal-img { height: 200px; }
+            .media-modal-content { padding: 1.5rem; }
+            .media-modal-title { font-size: 1.2rem; }
+            
             .company-table th { padding-bottom: 0; font-size: 0.7rem; }
             .company-table td { padding-top: 0.5rem; }
 
@@ -936,6 +1103,88 @@
             </div>
         </div>
     </section>
+
+    <section class="grid-section section-4">
+        <div class="sticky-col">
+            <span class="u-caps">04 / Media</span>
+        </div>
+        <div class="content-col">
+            <div class="media-container">
+                <div class="media-grid">
+                    <div class="media-card" data-article="1">
+                        <div class="media-card-img">
+                            <img src="image/article-placeholder.jpg" alt="記事サムネイル" onerror="this.src='https://via.placeholder.com/400x250/f3eaf8/666?text=Article'">
+                        </div>
+                        <div class="media-card-content">
+                            <h3 class="media-card-title">スタートアップの採用戦略：限られたリソースで優秀な人材を獲得する方法</h3>
+                            <span class="media-card-date">2025.01.02</span>
+                        </div>
+                    </div>
+                    <div class="media-card" data-article="2">
+                        <div class="media-card-img">
+                            <img src="image/article-placeholder.jpg" alt="記事サムネイル" onerror="this.src='https://via.placeholder.com/400x250/fdf5f9/666?text=Article'">
+                        </div>
+                        <div class="media-card-content">
+                            <h3 class="media-card-title">評価制度の設計：公平性と納得感を両立させるポイント</h3>
+                            <span class="media-card-date">2024.12.20</span>
+                        </div>
+                    </div>
+                    <div class="media-card" data-article="3">
+                        <div class="media-card-img">
+                            <img src="image/article-placeholder.jpg" alt="記事サムネイル" onerror="this.src='https://via.placeholder.com/400x250/f3eaf8/666?text=Article'">
+                        </div>
+                        <div class="media-card-content">
+                            <h3 class="media-card-title">リモートワーク時代の組織文化づくり</h3>
+                            <span class="media-card-date">2024.12.15</span>
+                        </div>
+                    </div>
+                    <div class="media-card" data-article="4">
+                        <div class="media-card-img">
+                            <img src="image/article-placeholder.jpg" alt="記事サムネイル" onerror="this.src='https://via.placeholder.com/400x250/fdf5f9/666?text=Article'">
+                        </div>
+                        <div class="media-card-content">
+                            <h3 class="media-card-title">CHRO機能の内製化 vs 外部活用、どちらが正解？</h3>
+                            <span class="media-card-date">2024.12.10</span>
+                        </div>
+                    </div>
+                    <div class="media-card" data-article="5">
+                        <div class="media-card-img">
+                            <img src="image/article-placeholder.jpg" alt="記事サムネイル" onerror="this.src='https://via.placeholder.com/400x250/f3eaf8/666?text=Article'">
+                        </div>
+                        <div class="media-card-content">
+                            <h3 class="media-card-title">採用ブランディングの基本：候補者に選ばれる企業になるには</h3>
+                            <span class="media-card-date">2024.12.05</span>
+                        </div>
+                    </div>
+                    <div class="media-card" data-article="6">
+                        <div class="media-card-img">
+                            <img src="image/article-placeholder.jpg" alt="記事サムネイル" onerror="this.src='https://via.placeholder.com/400x250/fdf5f9/666?text=Article'">
+                        </div>
+                        <div class="media-card-content">
+                            <h3 class="media-card-title">1on1ミーティングを効果的に運用するためのフレームワーク</h3>
+                            <span class="media-card-date">2024.11.28</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Media Modal -->
+    <div class="media-modal-wrap" id="media-modal-wrap">
+        <div class="media-modal">
+            <button class="media-modal-close" id="media-modal-close">×</button>
+            <div class="media-modal-img">
+                <img id="media-modal-img" src="" alt="">
+            </div>
+            <div class="media-modal-content">
+                <h2 class="media-modal-title" id="media-modal-title"></h2>
+                <span class="media-modal-date" id="media-modal-date"></span>
+                <p class="media-modal-excerpt" id="media-modal-excerpt"></p>
+                <a href="#" class="media-modal-link" id="media-modal-link">記事を読む →</a>
+            </div>
+        </div>
+    </div>
 
     <footer class="footer">
         <div class="footer-top">
@@ -1149,6 +1398,85 @@
             caseModalClose.addEventListener('click', closeCaseModal);
             caseModal.addEventListener('click', (e) => {
                 if(e.target === caseModal) closeCaseModal();
+            });
+
+            // メディアモーダル
+            const mediaArticles = {
+                1: {
+                    title: "スタートアップの採用戦略：限られたリソースで優秀な人材を獲得する方法",
+                    date: "2025.01.02",
+                    excerpt: "スタートアップ企業にとって、優秀な人材の獲得は成長の鍵となります。しかし、大企業と比べてリソースが限られる中で、どのようにして候補者の心を掴むのか。本記事では、実際の成功事例をもとに、スタートアップならではの採用戦略を解説します。",
+                    img: "https://via.placeholder.com/800x400/f3eaf8/666?text=Startup+Recruiting",
+                    link: "/media/startup-recruiting-strategy"
+                },
+                2: {
+                    title: "評価制度の設計：公平性と納得感を両立させるポイント",
+                    date: "2024.12.20",
+                    excerpt: "社員のモチベーションと組織の成長を両立させる評価制度とは？公平性を担保しながら、社員が納得できる評価の仕組みづくりについて、制度設計の専門家が解説します。",
+                    img: "https://via.placeholder.com/800x400/fdf5f9/666?text=Evaluation+System",
+                    link: "/media/evaluation-system-design"
+                },
+                3: {
+                    title: "リモートワーク時代の組織文化づくり",
+                    date: "2024.12.15",
+                    excerpt: "リモートワークが当たり前になった今、どのようにして組織文化を醸成し、チームの一体感を保つのか。成功企業の事例から学ぶ、新しい時代の組織づくり。",
+                    img: "https://via.placeholder.com/800x400/f3eaf8/666?text=Remote+Work+Culture",
+                    link: "/media/remote-work-culture"
+                },
+                4: {
+                    title: "CHRO機能の内製化 vs 外部活用、どちらが正解？",
+                    date: "2024.12.10",
+                    excerpt: "人事戦略を担うCHRO機能を自社で持つべきか、外部の専門家を活用すべきか。企業のステージや課題に応じた最適な選択肢を、メリット・デメリットとともに解説します。",
+                    img: "https://via.placeholder.com/800x400/fdf5f9/666?text=CHRO+Function",
+                    link: "/media/chro-inhouse-vs-outsource"
+                },
+                5: {
+                    title: "採用ブランディングの基本：候補者に選ばれる企業になるには",
+                    date: "2024.12.05",
+                    excerpt: "優秀な人材から「選ばれる企業」になるために必要な採用ブランディングの考え方と実践方法。自社の魅力を効果的に伝えるためのステップを紹介します。",
+                    img: "https://via.placeholder.com/800x400/f3eaf8/666?text=Employer+Branding",
+                    link: "/media/employer-branding-basics"
+                },
+                6: {
+                    title: "1on1ミーティングを効果的に運用するためのフレームワーク",
+                    date: "2024.11.28",
+                    excerpt: "1on1ミーティングを形骸化させず、社員の成長と組織の活性化につなげるには？効果的な1on1の進め方と、マネージャーが押さえるべきポイントを解説。",
+                    img: "https://via.placeholder.com/800x400/fdf5f9/666?text=1on1+Meeting",
+                    link: "/media/1on1-meeting-framework"
+                }
+            };
+
+            const mediaModal = document.getElementById('media-modal-wrap');
+            const mediaModalClose = document.getElementById('media-modal-close');
+            const mediaModalImg = document.getElementById('media-modal-img');
+            const mediaModalTitle = document.getElementById('media-modal-title');
+            const mediaModalDate = document.getElementById('media-modal-date');
+            const mediaModalExcerpt = document.getElementById('media-modal-excerpt');
+            const mediaModalLink = document.getElementById('media-modal-link');
+
+            document.querySelectorAll('.media-card').forEach(card => {
+                card.addEventListener('click', () => {
+                    const articleId = card.getAttribute('data-article');
+                    const article = mediaArticles[articleId];
+                    if (article) {
+                        mediaModalImg.src = article.img;
+                        mediaModalTitle.textContent = article.title;
+                        mediaModalDate.textContent = article.date;
+                        mediaModalExcerpt.textContent = article.excerpt;
+                        mediaModalLink.href = article.link;
+                        mediaModal.classList.add('open');
+                        document.body.style.overflow = 'hidden';
+                    }
+                });
+            });
+
+            const closeMediaModal = () => {
+                mediaModal.classList.remove('open');
+                document.body.style.overflow = '';
+            };
+            mediaModalClose.addEventListener('click', closeMediaModal);
+            mediaModal.addEventListener('click', (e) => {
+                if (e.target === mediaModal) closeMediaModal();
             });
 
             // お問い合わせモーダル
