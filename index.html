@@ -193,10 +193,59 @@
             color: var(--text-light);
         }
         
-        /* Profile */
+        /* Profile / Leadership */
         .section-3 { border-bottom: none; }
-        .section-3 .company-table th { color: var(--text); }
-        .section-3 .google-map-link { color: var(--accent); border-bottom-color: var(--accent); }
+        .profile-container {
+            padding: 4rem;
+        }
+        .profile-card {
+            display: flex;
+            gap: 3rem;
+            margin-bottom: 4rem;
+            align-items: flex-start;
+        }
+        .profile-card:last-child {
+            margin-bottom: 0;
+        }
+        .profile-card-reverse {
+            flex-direction: row-reverse;
+        }
+        .profile-image {
+            flex-shrink: 0;
+            width: 280px;
+        }
+        .profile-image img {
+            width: 100%;
+            height: auto;
+            border-radius: 4px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+        .profile-info {
+            flex: 1;
+        }
+        .profile-name {
+            font-size: 1.8rem;
+            font-weight: 900;
+            margin: 0 0 0.3rem 0;
+            color: var(--text);
+        }
+        .profile-title {
+            color: var(--accent);
+            font-weight: 700;
+        }
+        .profile-name-en {
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            color: var(--accent);
+            margin: 0 0 1.5rem 0;
+            font-weight: 500;
+        }
+        .profile-bio {
+            font-size: 0.95rem;
+            line-height: 1.9;
+            color: var(--text-muted);
+            margin: 0;
+        }
 
         /* Services */
         .services-grid {
@@ -691,6 +740,11 @@
             .cursor-img { display: none; }
 
             .company-table th, .company-table td { display: block; width: 100%; padding: 1rem 1.5rem; }
+            
+            .profile-container { padding: 2rem 1.5rem; }
+            .profile-card, .profile-card-reverse { flex-direction: column; gap: 1.5rem; }
+            .profile-image { width: 200px; }
+            .profile-name { font-size: 1.4rem; }
             .company-table th { padding-bottom: 0; font-size: 0.7rem; }
             .company-table td { padding-top: 0.5rem; }
 
@@ -855,39 +909,31 @@
 
     <section class="grid-section section-3">
         <div class="sticky-col">
-            <span class="u-caps">03 / Profile</span>
-            <div class="u-caps">About Us</div>
+            <span class="u-caps">03 / Leaders</span>
         </div>
         <div class="content-col">
-            <table class="company-table">
-                <tr>
-                    <th>Company Name</th>
-                    <td>株式会社ビニファイ</td>
-                </tr>
-                <tr>
-                    <th>Established</th>
-                    <td>2021年11月</td>
-                </tr>
-                <tr>
-                    <th>Address</th>
-                    <td>
-                        〒150-0001<br>
-                        東京都渋谷区神宮前6-23-4 桑野ビル2F<br>
-                        <a href="#" class="google-map-link">Google Map</a>
-                    </td>
-                </tr>
-                <tr>
-                    <th>Business</th>
-                    <td>
-                        人材育成コミュニティVinifyの運営<br>
-                        HR全域を支援する「talent blossom」
-                    </td>
-                </tr>
-                <tr>
-                    <th>Representative</th>
-                    <td>立花 隼人 / 横山 和彦</td>
-                </tr>
-            </table>
+            <div class="profile-container">
+                <div class="profile-card">
+                    <div class="profile-image">
+                        <img src="image/profile1.jpeg" alt="立花 隼人">
+                    </div>
+                    <div class="profile-info">
+                        <h3 class="profile-name">立花 隼人 <span class="profile-title">/ CEO</span></h3>
+                        <p class="profile-name-en">Hayato Tachibana</p>
+                        <p class="profile-bio">大学卒業後、株式会社光通信へ入社。法人用携帯セールスにて入社2ヶ月で月間粗利全国1位獲得。その後に株式会社日経HRに転職し、大手企業やスタートアップ企業の経営者・人事向けに採用支援。2年でフィールドセールス責任者と新人育成を担当。企業と若手人材の世の中のより深い採用課題に向き合うため、2021年11月に株式会社ビニファイ設立。</p>
+                    </div>
+                </div>
+                <div class="profile-card profile-card-reverse">
+                    <div class="profile-info">
+                        <h3 class="profile-name">横山 和彦 <span class="profile-title">/ CEO</span></h3>
+                        <p class="profile-name-en">Kazuhiko Yokoyama</p>
+                        <p class="profile-bio">1998年4月株式会社内田洋行へ入社。都内を中心に代理店営業を7年間経験。その後、採用や研修など人に関わる職に従事したいと思い人事職に転職。それから約12年間株式会社あとらす二十一、アクサダイレクト生命保険株式会社にて幅広く人事業務を経験。アクサダイレクト生命保険株式会社では、人事総務部門の責任者としてHRチームをリード。2021年11月にCEO立花とビニファイを共同設立。</p>
+                    </div>
+                    <div class="profile-image">
+                        <img src="image/profile2.jpeg" alt="横山 和彦">
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
