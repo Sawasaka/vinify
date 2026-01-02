@@ -1230,7 +1230,7 @@
                 <div class="media-grid">
                     <div class="media-card" data-article="1" data-category="採用">
                         <div class="media-card-img">
-                            <img src="image/article-placeholder.jpg" alt="記事サムネイル" onerror="this.src='https://via.placeholder.com/400x250/f3eaf8/666?text=Article'">
+                            <img src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=400&h=250&fit=crop" alt="採用戦略">
                         </div>
                         <div class="media-card-content">
                             <h3 class="media-card-title">スタートアップの採用戦略：限られたリソースで優秀な人材を獲得する方法</h3>
@@ -1242,7 +1242,7 @@
                     </div>
                     <div class="media-card" data-article="2" data-category="評価">
                         <div class="media-card-img">
-                            <img src="image/article-placeholder.jpg" alt="記事サムネイル" onerror="this.src='https://via.placeholder.com/400x250/fdf5f9/666?text=Article'">
+                            <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=400&h=250&fit=crop" alt="評価制度">
                         </div>
                         <div class="media-card-content">
                             <h3 class="media-card-title">評価制度の設計：公平性と納得感を両立させるポイント</h3>
@@ -1254,7 +1254,7 @@
                     </div>
                     <div class="media-card" data-article="3" data-category="組織">
                         <div class="media-card-img">
-                            <img src="image/article-placeholder.jpg" alt="記事サムネイル" onerror="this.src='https://via.placeholder.com/400x250/f3eaf8/666?text=Article'">
+                            <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=400&h=250&fit=crop" alt="組織文化">
                         </div>
                         <div class="media-card-content">
                             <h3 class="media-card-title">リモートワーク時代の組織文化づくり</h3>
@@ -1266,7 +1266,7 @@
                     </div>
                     <div class="media-card" data-article="4" data-category="CHRO">
                         <div class="media-card-img">
-                            <img src="image/article-placeholder.jpg" alt="記事サムネイル" onerror="this.src='https://via.placeholder.com/400x250/fdf5f9/666?text=Article'">
+                            <img src="https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=400&h=250&fit=crop" alt="CHRO">
                         </div>
                         <div class="media-card-content">
                             <h3 class="media-card-title">CHRO機能の内製化 vs 外部活用、どちらが正解？</h3>
@@ -1278,7 +1278,7 @@
                     </div>
                     <div class="media-card" data-article="5" data-category="採用">
                         <div class="media-card-img">
-                            <img src="image/article-placeholder.jpg" alt="記事サムネイル" onerror="this.src='https://via.placeholder.com/400x250/f3eaf8/666?text=Article'">
+                            <img src="https://images.unsplash.com/photo-1553877522-43269d4ea984?w=400&h=250&fit=crop" alt="採用ブランディング">
                         </div>
                         <div class="media-card-content">
                             <h3 class="media-card-title">採用ブランディングの基本：候補者に選ばれる企業になるには</h3>
@@ -1290,7 +1290,7 @@
                     </div>
                     <div class="media-card" data-article="6" data-category="1on1">
                         <div class="media-card-img">
-                            <img src="image/article-placeholder.jpg" alt="記事サムネイル" onerror="this.src='https://via.placeholder.com/400x250/fdf5f9/666?text=Article'">
+                            <img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=400&h=250&fit=crop" alt="1on1ミーティング">
                         </div>
                         <div class="media-card-content">
                             <h3 class="media-card-title">1on1ミーティングを効果的に運用するためのフレームワーク</h3>
@@ -1749,11 +1749,12 @@
                     const articleId = card.getAttribute('data-article');
                     const article = mediaArticles[articleId];
                     if (article) {
-                        mediaModalImg.src = article.img;
+                        const cardImg = card.querySelector('.media-card-img img');
+                        mediaModalImg.src = cardImg ? cardImg.src : '';
                         mediaModalTitle.textContent = article.title;
                         mediaModalDate.textContent = article.date;
                         mediaModalExcerpt.innerHTML = article.excerpt;
-                        mediaModalLink.href = article.link;
+                        mediaModalLink.href = 'article.html?id=' + articleId;
                         mediaModal.classList.add('open');
                         document.body.style.overflow = 'hidden';
                     }
